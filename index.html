@@ -8,10 +8,13 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Chart.js for Beautiful Graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Firebase SDKs (Compat for simple HTML usage) -->
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -36,20 +39,22 @@
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
-        .mesh-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden;
-        }
-        .blob {
-            position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.4; animation: float 10s infinite ease-in-out;
-        }
+        
+        /* Animated Background */
+        .mesh-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.4; animation: float 10s infinite ease-in-out; }
         @keyframes float {
             0% { transform: translate(0, 0); }
             50% { transform: translate(20px, -20px); }
             100% { transform: translate(0, 0); }
         }
+
+        /* Toggle Animations */
+        .chat-enter-active { opacity: 1; transform: translateY(0) scale(1); transition: all 0.3s ease-out; }
+        .chat-exit-active { opacity: 0; transform: translateY(20px) scale(0.95); transition: all 0.2s ease-in; }
     </style>
 </head>
-<body class="h-screen overflow-hidden flex">
+<body class="h-screen overflow-hidden flex relative">
 
     <!-- Background Effects -->
     <div class="mesh-bg">
@@ -59,25 +64,34 @@
     </div>
 
     <!-- Sidebar Navigation -->
-    <aside class="w-20 lg:w-64 glass-panel flex flex-col justify-between border-r border-white/5 z-20">
+    <aside class="w-20 lg:w-64 glass-panel flex flex-col justify-between border-r border-white/5 z-20 hidden md:flex">
         <div class="p-6">
             <div class="flex items-center gap-3 mb-10 text-indigo-400">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                <span class="text-xl font-bold tracking-wide hidden lg:block text-white">NEXUS</span>
+                <span class="text-xl font-bold tracking-wide hidden lg:block text-white">CLOUD9 Ops</span>
             </div>
             
-            <nav class="space-y-2">
-                <a href="#" class="flex items-center gap-4 p-3 rounded-xl bg-indigo-600/20 text-indigo-300 border border-indigo-500/30">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-                    <span class="hidden lg:block font-medium">Dashboard</span>
+            <nav class="space-y-2 text-sm">
+                <a href="#section-spirituality" class="flex items-center gap-4 p-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition">
+                    <span>🙏</span> <span class="hidden lg:block font-medium">Spirituality</span>
                 </a>
-                <a href="#" class="flex items-center gap-4 p-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                    <span class="hidden lg:block font-medium">Projects</span>
+                <a href="#section-overview" class="flex items-center gap-4 p-3 rounded-xl bg-indigo-600/20 text-indigo-300 border border-indigo-500/30">
+                    <span>📊</span> <span class="hidden lg:block font-medium">Overview</span>
                 </a>
-                <a href="#" class="flex items-center gap-4 p-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
-                    <span class="hidden lg:block font-medium">Stocks</span>
+                <a href="#section-stocks" class="flex items-center gap-4 p-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition">
+                    <span>📈</span> <span class="hidden lg:block font-medium">Stocks/Crypto</span>
+                </a>
+                <a href="#section-jobs" class="flex items-center gap-4 p-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition">
+                    <span>💼</span> <span class="hidden lg:block font-medium">Job Applications</span>
+                </a>
+                <a href="#section-marketing" class="flex items-center gap-4 p-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition">
+                    <span>📢</span> <span class="hidden lg:block font-medium">Marketing</span>
+                </a>
+                <a href="#section-microsoft" class="flex items-center gap-4 p-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition">
+                    <span>💻</span> <span class="hidden lg:block font-medium">MS Projects</span>
+                </a>
+                <a href="#section-future" class="flex items-center gap-4 p-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition">
+                    <span>🔮</span> <span class="hidden lg:block font-medium">Future</span>
                 </a>
             </nav>
         </div>
@@ -85,10 +99,10 @@
         <div class="p-6 border-t border-white/5">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 p-[2px]">
-                    <div class="w-full h-full rounded-full bg-black flex items-center justify-center text-xs font-bold">JD</div>
+                    <div class="w-full h-full rounded-full bg-black flex items-center justify-center text-xs font-bold">LG</div>
                 </div>
                 <div class="hidden lg:block">
-                    <p class="text-sm font-bold text-white">Jordan Doe</p>
+                    <p class="text-sm font-bold text-white">Liz Garcia</p>
                     <p class="text-xs text-gray-500">Pro Account</p>
                 </div>
             </div>
@@ -101,8 +115,8 @@
         <!-- Top Bar -->
         <header class="h-20 glass-panel border-b border-white/5 flex items-center justify-between px-8">
             <div>
-                <h1 class="text-2xl font-bold text-white">Good Morning, Jordan</h1>
-                <p class="text-sm text-gray-400">Here's what's happening with your projects today.</p>
+                <h1 class="text-2xl font-bold text-white">Good Morning, Liz</h1>
+                <p class="text-sm text-gray-400">Here's what's happening across your workflow today.</p>
             </div>
             <div class="flex gap-4">
                 <button class="p-2 rounded-full bg-white/5 hover:bg-white/10 text-gray-300 transition relative">
@@ -113,108 +127,248 @@
         </header>
 
         <!-- Dashboard Grid -->
-        <div class="flex-1 overflow-y-auto custom-scrollbar p-8">
+        <div class="flex-1 overflow-y-auto custom-scrollbar p-8 space-y-12">
             
-            <!-- Stats Row -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-gray-400 text-sm font-medium mb-2">Tasks Completed</div>
-                    <div class="flex items-end justify-between">
-                        <div class="text-3xl font-bold text-white">24</div>
-                        <div class="text-green-400 text-sm font-bold bg-green-400/10 px-2 py-1 rounded-lg">+12%</div>
+            <!-- 0. SPIRITUALITY SECTION (NEW TOP SECTION) -->
+            <section id="section-spirituality">
+                <h2 class="text-xl font-bold text-white mb-6">Spirituality & Faith</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-2xl flex items-center justify-between border-l-4 border-yellow-500">
+                        <div>
+                            <p class="text-gray-400 text-sm font-bold mb-1">DAILY PRAYER</p>
+                            <h3 class="text-xl font-bold text-white">Morning Rosary</h3>
+                        </div>
+                        <input type="checkbox" class="w-6 h-6 rounded border-gray-600 text-yellow-500 focus:ring-yellow-500 bg-black/50">
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl flex items-center justify-between border-l-4 border-blue-500">
+                        <div>
+                            <p class="text-gray-400 text-sm font-bold mb-1">READING</p>
+                            <h3 class="text-xl font-bold text-white">Daily Gospel</h3>
+                        </div>
+                        <span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded">Luke 1:26-38</span>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl flex items-center justify-between border-l-4 border-purple-500">
+                        <div>
+                            <p class="text-gray-400 text-sm font-bold mb-1">REFLECTION</p>
+                            <h3 class="text-xl font-bold text-white">Evening Journal</h3>
+                        </div>
+                        <button class="text-xs bg-white/10 hover:bg-white/20 px-3 py-1 rounded-lg transition">Write</button>
                     </div>
                 </div>
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-gray-400 text-sm font-medium mb-2">Hours Logged</div>
-                    <div class="flex items-end justify-between">
-                        <div class="text-3xl font-bold text-white">32.5h</div>
-                        <div class="text-blue-400 text-sm font-bold bg-blue-400/10 px-2 py-1 rounded-lg">On Track</div>
-                    </div>
-                </div>
-                <div class="glass-card p-6 rounded-2xl">
-                    <div class="text-gray-400 text-sm font-medium mb-2">Portfolio Value</div>
-                    <div class="flex items-end justify-between">
-                        <div class="text-3xl font-bold text-white">$14,205</div>
-                        <div class="text-purple-400 text-sm font-bold bg-purple-400/10 px-2 py-1 rounded-lg">+2.4%</div>
-                    </div>
-                </div>
-            </div>
+            </section>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 h-full">
-                
-                <!-- Project Column -->
-                <div class="lg:col-span-2 space-y-6">
-                    <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold">Active Projects</h2>
-                        <button class="text-sm text-indigo-400 hover:text-white transition">View All</button>
-                    </div>
-                    
-                    <div id="project-list" class="space-y-4">
-                        <!-- Projects Injected via JS -->
-                        <div class="glass-card p-5 rounded-2xl flex items-center justify-between">
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center text-2xl">⚡</div>
-                                <div>
-                                    <h3 class="font-bold text-lg">Internal MS Flow Setup</h3>
-                                    <p class="text-sm text-gray-400">Due: Tomorrow</p>
-                                </div>
-                            </div>
-                            <span class="px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 text-xs font-bold">IN PROGRESS</span>
+            <!-- 1. OVERVIEW SECTION -->
+            <section id="section-overview">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-white">1. Overview</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-2xl">
+                        <div class="text-gray-400 text-sm font-medium mb-2">Total Net Worth</div>
+                        <div class="flex items-end justify-between">
+                            <div class="text-3xl font-bold text-white">$142,205</div>
+                            <div class="text-green-400 text-sm font-bold bg-green-400/10 px-2 py-1 rounded-lg">+5.4%</div>
                         </div>
                     </div>
-
-                    <!-- Stock Tracker Widget -->
-                    <div class="glass-card rounded-2xl p-6 mt-8">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-lg font-bold">Market Watch</h3>
-                            <span class="text-xs text-green-400 animate-pulse">● Live Connection</span>
+                    <div class="glass-card p-6 rounded-2xl">
+                        <div class="text-gray-400 text-sm font-medium mb-2">Active Applications</div>
+                        <div class="flex items-end justify-between">
+                            <div class="text-3xl font-bold text-white">12</div>
+                            <div class="text-blue-400 text-sm font-bold bg-blue-400/10 px-2 py-1 rounded-lg">3 Interviews</div>
                         </div>
-                        <div id="stock-list" class="space-y-4">
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl">
+                        <div class="text-gray-400 text-sm font-medium mb-2">Content Reach</div>
+                        <div class="flex items-end justify-between">
+                            <div class="text-3xl font-bold text-white">8.5k</div>
+                            <div class="text-purple-400 text-sm font-bold bg-purple-400/10 px-2 py-1 rounded-lg">+12%</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. STOCKS / CRYPTO SECTION (With Chart) -->
+            <section id="section-stocks">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-white">2. Stocks & Crypto</h2>
+                    <button class="text-xs bg-indigo-600 hover:bg-indigo-500 px-3 py-1 rounded-lg transition">Trade</button>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- List -->
+                    <div class="lg:col-span-1 glass-card rounded-2xl p-6">
+                        <h3 class="text-sm font-bold text-gray-400 mb-4">Portfolio Assets</h3>
+                        <div id="stock-list" class="space-y-3">
                             <!-- Stocks Injected via JS -->
                         </div>
                     </div>
-                </div>
-
-                <!-- Chat Column -->
-                <div class="lg:col-span-1 flex flex-col h-[600px] lg:h-auto glass-card rounded-2xl overflow-hidden border border-white/10">
-                    <div class="p-4 border-b border-white/5 bg-black/20 flex justify-between items-center">
-                        <div>
-                            <h3 class="font-bold">AI Assistant</h3>
-                            <p id="chat-status" class="text-xs text-indigo-400">MS Copilot Mode</p>
-                        </div>
-                        <div class="flex gap-1 bg-white/5 p-1 rounded-lg">
-                            <button onclick="setChatMode('copilot')" id="btn-copilot" class="px-3 py-1 text-xs rounded-md bg-indigo-600 text-white transition">Copilot</button>
-                            <button onclick="setChatMode('gemini')" id="btn-gemini" class="px-3 py-1 text-xs rounded-md text-gray-400 hover:text-white transition">Gemini</button>
+                    <!-- Chart -->
+                    <div class="lg:col-span-2 glass-card rounded-2xl p-6">
+                        <h3 class="text-sm font-bold text-gray-400 mb-4">Performance History (YTD)</h3>
+                        <div class="h-64 w-full">
+                            <canvas id="stocksChart"></canvas>
                         </div>
                     </div>
-                    
-                    <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-black/20">
-                        <div class="flex justify-start">
-                            <div class="bg-white/10 text-gray-200 p-3 rounded-2xl rounded-tl-sm max-w-[85%] text-sm">
-                                Hello Jordan. I'm connected to your Microsoft Graph and Gemini AI. How can I help?
+                </div>
+            </section>
+
+            <!-- 3. JOB APPLICATION PROCESS (With Funnel Chart) -->
+            <section id="section-jobs">
+                <h2 class="text-xl font-bold text-white mb-6">3. Job Application Process</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Kanban / Status -->
+                    <div class="glass-card rounded-2xl p-6">
+                        <h3 class="text-sm font-bold text-gray-400 mb-4">Active Pipeline</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border-l-4 border-yellow-500">
+                                <div>
+                                    <div class="font-bold">Senior PM - Google</div>
+                                    <div class="text-xs text-gray-400">Applied 2 days ago</div>
+                                </div>
+                                <span class="text-xs bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded">Resume Sent</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border-l-4 border-blue-500">
+                                <div>
+                                    <div class="font-bold">DevRel - Vercel</div>
+                                    <div class="text-xs text-gray-400">Interview tomorrow 2pm</div>
+                                </div>
+                                <span class="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded">Interviewing</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border-l-4 border-green-500">
+                                <div>
+                                    <div class="font-bold">Tech Lead - Startup</div>
+                                    <div class="text-xs text-gray-400">Offer Received</div>
+                                </div>
+                                <span class="text-xs bg-green-500/20 text-green-300 px-2 py-1 rounded">Offer</span>
                             </div>
                         </div>
                     </div>
-
-                    <div class="p-4 border-t border-white/5 bg-black/40">
-                        <form id="chat-form" class="flex gap-2">
-                            <input type="text" id="chat-input" placeholder="Ask Copilot..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 focus:bg-white/10 transition">
-                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white p-3 rounded-xl transition">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-                            </button>
-                        </form>
+                    <!-- Chart -->
+                    <div class="glass-card rounded-2xl p-6">
+                        <h3 class="text-sm font-bold text-gray-400 mb-4">Application Funnel</h3>
+                        <div class="h-64 w-full flex justify-center">
+                            <canvas id="jobsChart"></canvas>
+                        </div>
                     </div>
                 </div>
+            </section>
 
-            </div>
+            <!-- 4. CONTENT CREATION / MARKETING -->
+            <section id="section-marketing">
+                <h2 class="text-xl font-bold text-white mb-6">4. Content Creation / Marketing</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="glass-card rounded-2xl p-6 flex flex-col items-center justify-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-pink-600/20 flex items-center justify-center text-2xl mb-2">📸</div>
+                        <div class="text-2xl font-bold">12.5K</div>
+                        <div class="text-xs text-gray-400">Instagram Followers</div>
+                    </div>
+                    <div class="glass-card rounded-2xl p-6 flex flex-col items-center justify-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-blue-600/20 flex items-center justify-center text-2xl mb-2">💼</div>
+                        <div class="text-2xl font-bold">5.2K</div>
+                        <div class="text-xs text-gray-400">LinkedIn Connections</div>
+                    </div>
+                    <div class="glass-card rounded-2xl p-6 flex flex-col items-center justify-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-red-600/20 flex items-center justify-center text-2xl mb-2">📺</div>
+                        <div class="text-2xl font-bold">1.1K</div>
+                        <div class="text-xs text-gray-400">YouTube Subs</div>
+                    </div>
+                </div>
+                <div class="glass-card rounded-2xl p-6 mt-6">
+                    <h3 class="text-sm font-bold text-gray-400 mb-4">Upcoming Content Calendar</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-3 rounded-xl bg-white/5 border border-white/5">
+                            <span class="text-xs text-pink-400 font-bold">INSTAGRAM</span>
+                            <p class="font-bold mt-1">"Day in the Life"</p>
+                            <p class="text-xs text-gray-500">Tomorrow 9:00 AM</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-white/5 border border-white/5">
+                            <span class="text-xs text-blue-400 font-bold">LINKEDIN</span>
+                            <p class="font-bold mt-1">"AI in 2025 Article"</p>
+                            <p class="text-xs text-gray-500">Wed 10:00 AM</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-white/5 border border-white/5">
+                            <span class="text-xs text-red-400 font-bold">YOUTUBE</span>
+                            <p class="font-bold mt-1">"My Tech Stack"</p>
+                            <p class="text-xs text-gray-500">Fri 4:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. MICROSOFT JOB PROJECTS -->
+            <section id="section-microsoft">
+                <h2 class="text-xl font-bold text-white mb-6">5. Microsoft Job Projects</h2>
+                <div id="project-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Hardcoded Internal Project -->
+                    <div class="glass-card p-5 rounded-2xl flex items-center justify-between border-l-4 border-orange-500">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-orange-500/20 flex items-center justify-center text-2xl">⚡</div>
+                            <div>
+                                <h3 class="font-bold text-lg">Internal MS Flow Setup</h3>
+                                <p class="text-sm text-gray-400">Due: Tomorrow</p>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 text-xs font-bold">IN PROGRESS</span>
+                    </div>
+                    <!-- Injected projects will append here -->
+                </div>
+            </section>
+
+            <!-- 6. FUTURE PROJECTS (NEW PLACEHOLDER) -->
+            <section id="section-future" class="pb-24 mt-12">
+                <h2 class="text-xl font-bold text-white mb-6">6. Future Projects</h2>
+                <div class="glass-card p-8 rounded-2xl border-2 border-dashed border-white/10 flex flex-col items-center justify-center text-center h-48 hover:border-indigo-500/50 transition cursor-pointer group">
+                    <div class="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center mb-3 group-hover:scale-110 transition">
+                        <svg class="w-6 h-6 text-gray-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Add New Project</h3>
+                    <p class="text-sm text-gray-500 mt-1">Plan your next big Microsoft or personal initiative.</p>
+                </div>
+            </section>
+
         </div>
     </main>
+
+    <!-- AI Assistant Floating Interface (Same as before) -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
+        <div id="chat-window" class="glass-card w-80 h-[500px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl hidden flex-col transition-all duration-300 origin-bottom-right">
+            <div class="p-4 border-b border-white/5 bg-black/20 flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold">AI Assistant</h3>
+                    <p id="chat-status" class="text-xs text-indigo-400">MS Copilot Mode</p>
+                </div>
+                <div class="flex gap-1 bg-white/5 p-1 rounded-lg">
+                    <button onclick="setChatMode('copilot')" id="btn-copilot" class="px-3 py-1 text-xs rounded-md bg-indigo-600 text-white transition">Copilot</button>
+                    <button onclick="setChatMode('gemini')" id="btn-gemini" class="px-3 py-1 text-xs rounded-md text-gray-400 hover:text-white transition">Gemini</button>
+                </div>
+            </div>
+            <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-black/20">
+                <div class="flex justify-start">
+                    <div class="bg-white/10 text-gray-200 p-3 rounded-2xl rounded-tl-sm max-w-[85%] text-sm">
+                        Hello Liz. I'm connected to your Microsoft Graph and Gemini AI. How can I help?
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 border-t border-white/5 bg-black/40">
+                <form id="chat-form" class="flex gap-2">
+                    <input type="text" id="chat-input" placeholder="Ask Copilot..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 focus:bg-white/10 transition">
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white p-3 rounded-xl transition">➤</button>
+                </form>
+            </div>
+        </div>
+        <button onclick="toggleChat()" class="w-14 h-14 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg flex items-center justify-center transition-all hover:scale-110 active:scale-95 group">
+            <svg id="icon-open" class="w-7 h-7 block group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+            <svg id="icon-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+    </div>
+
+    <!-- Link to external scripts.js -->
+    <script src="scripts.js"></script>
 
     <!-- LOGIC SCRIPT -->
     <script>
         // --- CONFIGURATION ---
-        const GEMINI_API_KEY = "AIzaSyCmXpngiCz5tuYXdfVSZYaJNe6t1WDZMNs"; // <<< PASTE KEY HERE
-        const PYTHON_STOCK_API_URL = "http://127.0.0.1:5000/api/v1/trade"; // <<< PASTE RENDER URL HERE LATER
+        const GEMINI_API_KEY = "AIzaSyCmXpngiCz5tuYXdfVSZYaJNe6t1WDZMNs"; 
+        const PYTHON_STOCK_API_URL = "http://127.0.0.1:5000/api/v1/trade"; 
         const PYTHON_API_TOKEN = "YOUR_SECRET_TOKEN";
 
         // --- STATE ---
@@ -222,77 +376,121 @@
         const mockStocks = [
             { ticker: 'MSFT', price: 415.20, change: '+1.5%' },
             { ticker: 'NVDA', price: 890.00, change: '+2.1%' },
-            { ticker: 'GOOG', price: 175.50, change: '-0.4%' }
+            { ticker: 'GOOG', price: 175.50, change: '-0.4%' },
+            { ticker: 'BTC', price: 64200.00, change: '+3.2%' },
+            { ticker: 'ETH', price: 3450.00, change: '+1.1%' }
         ];
 
-        // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
             renderStocks();
+            renderCharts();
             setupChat();
+            renderProjects(); // Mock projects
         });
 
-        // --- STOCK LOGIC ---
+        // --- 1. CHART.JS RENDERING ---
+        function renderCharts() {
+            // Stock Chart (Line)
+            new Chart(document.getElementById('stocksChart'), {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Portfolio Growth',
+                        data: [12000, 12500, 12300, 13000, 13800, 14205],
+                        borderColor: '#818cf8', // Indigo
+                        backgroundColor: 'rgba(129, 140, 248, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af' } },
+                        x: { grid: { display: false }, ticks: { color: '#9ca3af' } }
+                    }
+                }
+            });
+
+            // Job Applications Chart (Bar)
+            new Chart(document.getElementById('jobsChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Applied', 'Phone Screen', 'Technical', 'Final', 'Offers'],
+                    datasets: [{
+                        label: 'Count',
+                        data: [45, 12, 5, 3, 1],
+                        backgroundColor: [
+                            'rgba(255, 255, 255, 0.2)',
+                            'rgba(234, 179, 8, 0.5)', // Yellow
+                            'rgba(59, 130, 246, 0.5)', // Blue
+                            'rgba(168, 85, 247, 0.5)', // Purple
+                            'rgba(34, 197, 94, 0.8)'   // Green
+                        ],
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } } }
+                }
+            });
+        }
+
+        // --- 2. STOCK LIST ---
         function renderStocks() {
             const container = document.getElementById('stock-list');
-            container.innerHTML = mockStocks.map(stock => `
-                <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 hover:bg-white/10 transition border border-white/5">
+            container.innerHTML = mockStocks.map(s => `
+                <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition">
                     <div>
-                        <div class="font-bold">${stock.ticker}</div>
-                        <div class="text-xs ${stock.change.includes('+') ? 'text-green-400' : 'text-red-400'}">${stock.change}</div>
+                        <div class="font-bold">${s.ticker}</div>
+                        <div class="text-xs ${s.change.includes('+') ? 'text-green-400' : 'text-red-400'}">${s.change}</div>
                     </div>
                     <div class="flex items-center gap-3">
-                        <div class="font-mono font-bold">$${stock.price.toFixed(2)}</div>
-                        <button onclick="executeTrade('${stock.ticker}')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg transition">
-                            BUY
-                        </button>
+                        <div class="font-mono font-bold">$${s.price.toLocaleString()}</div>
+                        <button onclick="executeTrade('${s.ticker}')" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-bold rounded transition">BUY</button>
                     </div>
                 </div>
             `).join('');
         }
 
         async function executeTrade(ticker) {
-            // Visual Feedback
-            const btn = event.target;
-            const originalText = btn.innerText;
-            btn.innerText = "Processing...";
-            btn.disabled = true;
-
-            try {
-                // Call Python Backend
-                console.log(`Calling ${PYTHON_STOCK_API_URL} for ${ticker}...`);
-                // Uncomment below for real API call once deployed
-                /*
-                const response = await fetch(PYTHON_STOCK_API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${PYTHON_API_TOKEN}` },
-                    body: JSON.stringify({ action: 'BUY', ticker: ticker, quantity: 10 })
-                });
-                if(!response.ok) throw new Error('API Failed');
-                const data = await response.json();
-                */
-               
-                // Simulating success for demo
-                await new Promise(r => setTimeout(r, 1000)); 
-                alert(`Success: Bought 10 shares of ${ticker}`);
-
-            } catch (e) {
-                console.error(e);
-                alert("Trade Failed: Check console/API connection");
-            } finally {
-                btn.innerText = originalText;
-                btn.disabled = false;
-            }
+            alert(`Simulated BUY order for ${ticker} sent to Python API.`);
         }
 
-        // --- CHAT LOGIC ---
+        // --- 3. PROJECTS (MOCK APPEND) ---
+        function renderProjects() {
+            const container = document.getElementById('project-list');
+            const data = [
+                { name: 'Client Migration', status: 'Pending', icon: '💻', lastUpdate: '1d ago' },
+                { name: 'Q4 Budget Analysis', status: 'Review', icon: '📊', lastUpdate: '5h ago' }
+            ];
+            const html = data.map(p => `
+                <div class="glass-card p-5 rounded-2xl flex items-center justify-between border-l-4 border-indigo-500">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center text-2xl">${p.icon}</div>
+                        <div>
+                            <h3 class="font-bold text-lg">${p.name}</h3>
+                            <p class="text-sm text-gray-400">Due: ${p.lastUpdate}</p>
+                        </div>
+                    </div>
+                    <span class="px-3 py-1 rounded-full bg-white/10 text-xs font-bold">${p.status.toUpperCase()}</span>
+                </div>
+            `).join('');
+            container.insertAdjacentHTML('beforeend', html);
+        }
+
+        // --- 4. CHAT LOGIC ---
         function setChatMode(mode) {
             chatMode = mode;
             document.getElementById('chat-status').innerText = mode === 'copilot' ? 'MS Copilot Mode' : 'Gemini AI Mode';
-            
-            // Update styling
             const btnCopilot = document.getElementById('btn-copilot');
             const btnGemini = document.getElementById('btn-gemini');
-            
             if(mode === 'copilot') {
                 btnCopilot.className = "px-3 py-1 text-xs rounded-md bg-indigo-600 text-white transition";
                 btnGemini.className = "px-3 py-1 text-xs rounded-md text-gray-400 hover:text-white transition";
@@ -303,31 +501,22 @@
         }
 
         function setupChat() {
-            const form = document.getElementById('chat-form');
-            form.addEventListener('submit', async (e) => {
+            document.getElementById('chat-form').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const input = document.getElementById('chat-input');
-                const msg = input.value.trim();
-                if(!msg) return;
-
-                // Add User Message
-                addMessage(msg, 'user');
-                input.value = '';
-
-                // Show Loading
-                const loadingId = addMessage('Thinking...', 'agent', true);
-
-                // Logic Router
-                let responseText = "";
-                if (chatMode === 'copilot') {
-                    responseText = handleCopilotMock(msg);
-                } else {
-                    responseText = await handleGeminiReal(msg);
+                if(input.value.trim()) {
+                    addMessage(input.value, 'user');
+                    const loadingId = addMessage('Thinking...', 'agent', true);
+                    let responseText = "";
+                    if (chatMode === 'copilot') {
+                        responseText = handleCopilotMock(input.value);
+                    } else {
+                        responseText = await handleGeminiReal(input.value);
+                    }
+                    document.getElementById(loadingId).remove();
+                    addMessage(responseText, 'agent');
+                    input.value = '';
                 }
-
-                // Remove Loading & Add Response
-                document.getElementById(loadingId).remove();
-                addMessage(responseText, 'agent');
             });
         }
 
@@ -335,34 +524,27 @@
             const container = document.getElementById('chat-messages');
             const id = 'msg-' + Date.now();
             const isUser = sender === 'user';
-            
-            const html = `
+            container.insertAdjacentHTML('beforeend', `
                 <div id="${id}" class="flex ${isUser ? 'justify-end' : 'justify-start'} animate-fade-in">
-                    <div class="${isUser ? 'bg-indigo-600 text-white rounded-tr-sm' : 'bg-white/10 text-gray-200 rounded-tl-sm'} p-3 rounded-2xl max-w-[85%] text-sm leading-relaxed ${isLoading ? 'animate-pulse' : ''}">
+                    <div class="${isUser ? 'bg-indigo-600 text-white' : 'bg-white/10 text-gray-200'} p-3 rounded-2xl max-w-[85%] text-sm mb-2 ${isLoading ? 'animate-pulse' : ''}">
                         ${text}
                     </div>
                 </div>
-            `;
-            container.insertAdjacentHTML('beforeend', html);
+            `);
             container.scrollTop = container.scrollHeight;
             return id;
         }
 
-        // --- MOCK COPILOT HANDLER ---
         function handleCopilotMock(query) {
             const q = query.toLowerCase();
-            if(q.includes('email')) return "✅ Checked Outlook. You have 3 unread high-priority emails. Drafting summary...";
+            if(q.includes('email')) return "✅ Checked Outlook. 3 unread high-priority emails.";
             if(q.includes('log')) return "✅ Triggered Power Automate: Logged 4 hours to Project Nexus.";
-            if(q.includes('meeting')) return "🗓️ Calendar checked. You are free at 2 PM. Should I schedule the team sync?";
-            return "I am ready to automate your Microsoft tasks. Try asking me to check emails or log hours.";
+            return "I am ready to automate your Microsoft tasks.";
         }
 
-        // --- REAL GEMINI HANDLER ---
         async function handleGeminiReal(query) {
             if (!GEMINI_API_KEY || GEMINI_API_KEY.includes("PASTE")) return "Error: API Key Missing.";
-            
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${GEMINI_API_KEY}`;
-            
             try {
                 const response = await fetch(url, {
                     method: 'POST',
@@ -370,9 +552,8 @@
                     body: JSON.stringify({ contents: [{ parts: [{ text: query }] }] })
                 });
                 const data = await response.json();
-                return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response from AI.";
+                return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response.";
             } catch (e) {
-                console.error(e);
                 return "Error connecting to Gemini.";
             }
         }
