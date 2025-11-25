@@ -22,10 +22,44 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-    <!-- EXTERNAL STYLESHEET -->
-    <link rel="stylesheet" href="assets/styles/styles.css">
-</head>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #050505; color: white; }
+        .font-serif { font-family: 'Playfair Display', serif; }
 
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .mesh-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.4; animation: float 10s infinite ease-in-out; }
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(20px, -20px); }
+            100% { transform: translate(0, 0); }
+        }
+        .page-transition { transition: opacity 0.3s ease-in-out; }
+        .hidden-page { display: none; opacity: 0; }
+        .visible-page { display: block; opacity: 1; }
+        
+        /* New Spirituality Styles */
+        .status-grace { background-color: rgba(34, 197, 94, 0.1); color: #4ade80; border: 1px solid #22c55e; }
+        .status-sin { background-color: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid #ef4444; }
+    </style>
+</head>
 <body class="h-screen overflow-hidden flex relative">
 
     <!-- Background Effects -->
@@ -832,6 +866,5 @@
             }
         }
     </script>
-    <script type="module" src="./assets/scripts/app.js"></script>
 </body>
 </html>
