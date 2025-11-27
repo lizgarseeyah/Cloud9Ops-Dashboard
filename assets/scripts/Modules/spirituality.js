@@ -319,6 +319,44 @@ clearSelectedRosary() {
     this.toast("Selected beads cleared.", "warning");
 },
 
+resetBeadsOnly() {
+    // Reset beads only
+    this.rosaryState.beads = Array(7).fill(null).map(() => ({
+        active: false,
+        mode: null
+    }));
+
+    this.saveRosary();
+    this.renderBeads();
+    this.updateDayCounter();
+
+    this.toast("Rosary beads reset.", "warning");
+},
+
+resetDayCounterOnly() {
+    // Clear date-related fields
+    this.rosaryState.startDate = null;
+    this.rosaryState.day28 = null;
+    this.rosaryState.day54 = null;
+
+    // Update the UI date inputs
+    const startInput = document.getElementById("rosary-start-date");
+    if (startInput) startInput.value = "";
+
+    const el28 = document.getElementById("rosary-day-28");
+    const el54 = document.getElementById("rosary-day-54");
+
+    if (el28) el28.textContent = "--";
+    if (el54) el54.textContent = "--";
+
+    // Save + update UI logic
+    this.saveRosary();
+    this.calculateRosaryDates();
+    this.updateNovenaDay();
+
+    this.toast("Day counter & dates reset.", "warning");
+}, 
+
 clearAllRosary() {
     // Full reset
     this.rosaryState = {
@@ -506,6 +544,36 @@ async clearAllPrayers() {
 
     // 3. Toast
     this.toast("All prayers cleared 🙏", "warning");
+},
+
+// --------------------------------------------------
+// Speech-to-Text for Prayer Entry
+// --------------------------------------------------
+startSpeech() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+        this.toast("Speech recognition not supported on this device.", "error");
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.onresult = (event) => {
+        const text = event.results[0][0].transcript;
+        const input = document.getElementById("prayer-input");
+        input.value = text;
+        this.toast("Speech captured 🎤", "success");
+    };
+
+    recognition.onerror = (event) => {
+        console.error("Speech error:", event);
+        this.toast("Mic error — try again.", "error");
+    };
 },
 ///////////////////////////////////
     // --------------------------------------------------
