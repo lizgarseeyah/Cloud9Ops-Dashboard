@@ -86,3 +86,26 @@ export async function getSinState() {
   console.log("🔥 State: Condemnation");
   return "Condemnation";
 }
+
+// --------------------------------------------------
+// Log Prayer
+// --------------------------------------------------
+export async function addPrayer(text) {
+  try {
+    const response = await sheets.spreadsheets.values.append({
+      spreadsheetId: process.env.SHEET_ID,
+      range: "RelationshipwGod!C2:C",
+      valueInputOption: "RAW",
+      insertDataOption: "INSERT_ROWS",
+      resource: {
+        values: [[text]]
+      }
+    });
+
+    return response.data;
+  } catch (err) {
+    console.error("Google Sheets Prayer Error:", err);
+    throw err;
+  }
+}
+
