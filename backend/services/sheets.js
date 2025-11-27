@@ -88,24 +88,49 @@ export async function getSinState() {
 }
 
 // --------------------------------------------------
-// Log Prayer
+// PRAYERS — behave EXACTLY like Sins
 // --------------------------------------------------
-export async function addPrayer(text) {
-  try {
-    const response = await sheets.spreadsheets.values.append({
-      spreadsheetId: process.env.SHEET_ID,
-      range: "RelationshipwGod!C2:C",
-      valueInputOption: "RAW",
-      insertDataOption: "INSERT_ROWS",
-      resource: {
-        values: [[text]]
-      }
-    });
 
-    return response.data;
-  } catch (err) {
-    console.error("Google Sheets Prayer Error:", err);
-    throw err;
-  }
+// Add a prayer (C2 downward, no row shifting)
+export async function addPrayer(text) {
+  const range = `RelationshipwGod!C2:C1000`;
+
+  // Read existing prayers to find next empty row
+  const res = await sheets.spreadsheets.values.get({
+    spreadsheetId: process.env.SHEET_ID,
+    range
+  });
+
+  const rows = res.data.values || [];
+
+  // C2 = row 2 → next row = 2 + existing count
+  const nextRow = 2 + rows.length;
+
+  const writeRange = `RelationshipwGod!C${nextRow}`;
+
+  await sheets.spreadsheets.values.update({
+    spreadsheetId: process.env.SHEET_ID,
+    range: writeRange,
+    valueInputOption: "RAW",
+    requestBody: { values: [[text]] }
+  });
+
+  console.log(`🙏 Added prayer to row ${nextRow}`);
+  return { row: nextRow };
+}
+
+// Delete a single prayer (clear cell only)
+export async function deletePrayer(rowNumber) {
+  return sheets.spreadsheets.values.clear({
+    spreadsheetId: process.env.SHEET_ID,
+    range: `RelationshipwGod!C${rowNumber}`
+  });
+}
+
+export async function clearAllPrayers() {
+  return sheets.spreadsheets.values.clear({
+    spreadsheetId: process.env.SHEET_ID,
+    range: "RelationshipwGod!C2:C1000"
+  });
 }
 
