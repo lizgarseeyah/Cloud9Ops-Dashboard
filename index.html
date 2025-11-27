@@ -261,18 +261,33 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="glass-card p-6 rounded-2xl mb-6 border-l-4 border-blue-600">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-lg font-bold text-white">Bible in a Year</h3>
+                                <div class="text-right">
+                                    <span id="bible-day-number" class="text-2xl font-bold text-blue-400">Day 0</span>
+                                    <span class="text-[10px] text-gray-500 uppercase tracking-wider">of 365</span>
+                                </div>
+                            </div>
 
-                        <div class="glass-card p-6 rounded-2xl">
-                            <div class="flex justify-between items-center mb-4">
-                                <h3 class="font-bold text-white flex items-center gap-2"><i data-lucide="book" class="w-4 h-4 text-blue-400"></i> Bible in a Year</h3>
-                                <span class="text-xs text-gray-400" id="bible-progress-text">Day 45 of 365</span>
-                            </div>
-                            <div class="w-full bg-white/5 rounded-full h-2 mb-4 overflow-hidden">
-                                <div id="bible-bar" class="bg-blue-500 h-2 rounded-full" style="width: 12%"></div>
-                            </div>
-                            <div class="flex gap-2">
-                                <input type="number" id="bible-day-input" value="45" class="w-20 bg-black/30 border border-white/10 rounded-lg px-3 py-1 text-sm text-center focus:border-blue-500 focus:outline-none">
-                                <button onclick="updateBibleProgress()" class="flex-1 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-600/30 rounded-lg text-xs font-bold transition">Update Progress</button>
+                            <p class="text-xs text-gray-400 mb-1">Today: <span id="bible-today-date">--</span></p>
+                            <p class="text-xs text-gray-400 mb-1">Last Submitted: <span id="bible-last-date">--</span></p>
+                            <p class="text-xs text-gray-400 mb-4">Behind: <span id="bible-behind">--</span></p>
+
+                            <button onclick="Spirituality.updateBibleProgress()"
+                                class="w-full py-2 text-xs font-bold 
+                                    bg-gradient-to-r from-blue-700 to-blue-600
+                                    hover:from-blue-500 hover:to-blue-400
+                                    text-white rounded-lg border border-blue-800
+                                    shadow-md shadow-blue-900/30 transition">
+                                Update Progress
+                            </button>
+
+                            <div class="mt-3">
+                                <a href="https://bibleinayearonline.com/daily-oyb/" target="_blank"
+                                    class="text-blue-400 hover:text-blue-300 underline text-[10px]">
+                                    Read Today’s Reading
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -286,8 +301,12 @@
                                     <p class="text-xs text-gray-400">Joyful Mysteries</p>
                                 </div>
                                 <div class="text-right">
-                                    <span class="text-2xl font-bold text-yellow-500 block">12</span>
-                                    <span class="text-[10px] text-gray-500 uppercase tracking-wider">This Month</span>
+                                    <span id="rosary-novena-day" class="text-2xl font-bold text-yellow-500 block">
+                                        Day 0
+                                    </span>
+                                    <span class="text-[10px] text-gray-500 uppercase tracking-wider">
+                                        of 54-Day Novena
+                                    </span>
                                 </div>
                              </div>
 
@@ -301,13 +320,57 @@
                                     <span class="text-[10px] text-yellow-500/70 group-hover:text-yellow-500">Logs count towards novena progress</span>
                                 </div>
                              </label>
+                             <!--//////////////////////////////////////////////////////////-->
+                            <!-- 🌹 Rosary Dates -->
+                            <div class="grid grid-cols-3 gap-2 text-[10px] text-gray-300 mb-4">
+                                <div>
+                                    <label class="block mb-1 text-yellow-300">Start</label>
+                                    <input id="rosary-start-date" type="date"
+                                        class="w-full bg-gray-800 text-xs text-gray-200 rounded-lg p-1 border border-gray-700">
+                                </div>
+                                <div>
+                                    <label class="block mb-1 text-yellow-300">Day 28</label>
+                                    <div id="rosary-day-28" class="text-xs bg-gray-800 p-1 rounded-lg border border-gray-700">
+                                        --
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block mb-1 text-yellow-300">Day 54</label>
+                                    <div id="rosary-day-54" class="text-xs bg-gray-800 p-1 rounded-lg border border-gray-700">
+                                        --
+                                    </div>
+                                </div>
+                            </div>
 
-                             <div class="flex justify-between px-2 mb-6 opacity-80" id="bead-row">
-                                 </div>
+                            <!-- 🌹 Rosary Beads -->
+                            <div id="bead-row" class="flex justify-between px-2 mb-6 opacity-80"></div>
 
-                             <button onclick="logRosary()" class="w-full py-3 bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-500 hover:to-yellow-600 text-white rounded-xl text-sm font-bold transition shadow-lg shadow-yellow-900/20 flex items-center justify-center gap-2">
-                                <i data-lucide="plus-circle" class="w-4 h-4"></i> Complete & Log Rosary
-                             </button>
+                            <!--//////////////////////////////////////////////////////////-->
+                            <div class="flex justify-between px-2 mb-6 opacity-80" id="bead-row"></div>
+                            <!-- 🌹 Rosary Action Buttons -->
+                            <div class="flex mb-4">
+                                <button onclick="Spirituality.clearAllRosary()"
+                                    class="w-full py-2 text-xs font-bold
+                                        bg-gradient-to-r from-yellow-600 to-yellow-500
+                                        hover:from-yellow-500 hover:to-yellow-400
+                                        text-black rounded-lg border border-yellow-700
+                                        shadow-md shadow-yellow-900/30 transition">
+                                    Reset Rosary
+                                </button>
+                            </div>
+                            <!-- 🌹 Rosary Links (moved under buttons) -->
+                            <div class="flex flex-col gap-1 mb-4 text-[10px]">
+                                <a href="https://www.rosarycenter.org/confraternity-prayer/" target="_blank" class="text-yellow-400 hover:text-yellow-300 underline">
+                                    Rosary Confraternity Prayer
+                                </a>
+                                <a href="https://hallow.com/blog/how-to-pray-54-day-novena/" target="_blank" class="text-yellow-400 hover:text-yellow-300 underline">
+                                    54-Day Novena Guide
+                                </a>
+                                <a href="https://media.benedictine.edu/rosary-meditations-at-the-gregorian" target="_blank" class="text-yellow-400 hover:text-yellow-300 underline">
+                                    Rosary Meditations (Gregorian)
+                                </a>
+                            </div>
+
                         </div>
                         
                         <div class="glass-card p-6 rounded-2xl">
@@ -323,16 +386,62 @@
                                 </a>
                             </div>
 
-                            <div class="grid grid-cols-2 gap-3">
-                                <div class="p-3 bg-white/5 rounded-xl text-center cursor-pointer hover:bg-white/10 transition border border-white/5">
-                                    <span class="block text-[10px] text-gray-400 uppercase tracking-wider mb-1">Protection</span>
-                                    <span class="text-sm font-bold text-indigo-300">St. Michael</span>
-                                </div>
-                                <div class="p-3 bg-white/5 rounded-xl text-center cursor-pointer hover:bg-white/10 transition border border-white/5">
-                                    <span class="block text-[10px] text-gray-400 uppercase tracking-wider mb-1">Noon</span>
-                                    <span class="text-sm font-bold text-indigo-300">The Angelus</span>
-                                </div>
+                            <div class="grid grid-cols-2 gap-3 mt-4">
+
+                                <!-- Protection (St. Michael the Archangel) -->
+                                <a href="https://www.ewtn.com/catholicism/devotions/prayer-to-st-michael-the-archangel-371"
+                                target="_blank"
+                                class="p-4 rounded-xl bg-gray-800 hover:bg-gray-700 transition text-center shadow-md">
+                                    <p class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Protection</p>
+                                    <p class="font-semibold text-white">St. Michael</p>
+                                </a>
+
+                                <!-- Noon (3PM Divine Mercy) -->
+                                <a href="https://sistersofdivinemercy.org/documents/2021/1/3pm%20Hour%20of%20Mercy%20Prayer.pdf"
+                                target="_blank"
+                                class="p-4 rounded-xl bg-gray-800 hover:bg-gray-700 transition text-center shadow-md">
+                                    <p class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">3PM Prayer</p>
+                                    <p class="font-semibold text-white">Divine Mercy</p>
+                                </a>
                             </div>
+                            <div class="grid grid-cols-2 gap-3 mt-3">
+                            <a href="https://www.catholicdoors.com/prayers/english3/p02675.htm"
+                            target="_blank"
+                            class="p-4 rounded-xl bg-gray-800 hover:bg-gray-700 transition text-center shadow-md">
+                                <p class="font-semibold text-white text-sm">Spiritual Warfare</p>
+                            </a>
+
+                            <a href="https://www.ewtn.com/catholicism/devotions/litany-to-christ-the-king-252"
+                            target="_blank"
+                            class="p-4 rounded-xl bg-gray-800 hover:bg-gray-700 transition text-center shadow-md">
+                                <p class="font-semibold text-white text-sm">Litany to Christ the King</p>
+                            </a>
+
+                            <a href="https://www.ewtn.com/catholicism/devotions/sacred-heart-27901"
+                            target="_blank"
+                            class="p-4 rounded-xl bg-gray-800 hover:bg-gray-700 transition text-center shadow-md">
+                                <p class="font-semibold text-white text-sm">Litany of the Sacred Heart</p>
+                            </a>
+
+                            <a href="https://www.ewtn.com/catholicism/devotions/litany-of-humility-245"
+                            target="_blank"
+                            class="p-4 rounded-xl bg-gray-800 hover:bg-gray-700 transition text-center shadow-md">
+                                <p class="font-semibold text-white text-sm">Litany of Humility</p>
+                            </a>
+
+                            <a href="https://www.ourcatholicprayers.com/prayers-for-purity.html"
+                            target="_blank"
+                            class="p-4 rounded-xl bg-gray-800 hover:bg-gray-700 transition text-center shadow-md">
+                                <p class="font-semibold text-white text-sm">Purity Prayer</p>
+                            </a>
+
+                            <a href="https://everycatholicman.com/litany-of-kindness-against-envy/"
+                            target="_blank"
+                            class="p-4 rounded-xl bg-gray-800 hover:bg-gray-700 transition text-center shadow-md">
+                                <p class="font-semibold text-white text-sm">Prayer Against Envy</p>
+                            </a>
+
+                        </div>
                         </div>
                     </div>
 
