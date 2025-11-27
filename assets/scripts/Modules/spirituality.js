@@ -38,7 +38,7 @@ export const Spirituality = {
     // --------------------------------------------------
     async api(endpoint, options = {}) {
         try {
-            const res = await fetch(`${API}${endpoint}`, {
+            const res = await fetch(`${API_SINS}${endpoint}`, {
                 headers: { "Content-Type": "application/json" },
                 ...options
             });
@@ -466,6 +466,13 @@ deletePrayer(index) {
     this.prayerState.prayers.splice(index, 1);
     this.savePrayerWall();
     this.renderPrayerWall();
+    this.toast("Prayer removed.", "warning");
+},
+deleteAllPrayers() {
+    this.prayerState.prayers = [];
+    this.savePrayerWall();
+    this.renderPrayerWall();
+    this.toast("All prayers cleared.", "warning");
 },
 async addPrayer() {
     const text = prompt("Enter your prayer intention:");
@@ -485,7 +492,21 @@ async addPrayer() {
 
     this.toast("Prayer saved to Google Sheet 🙏", "success");
 },
+async clearAllPrayers() {
+    // 1. Clear UI + LocalState
+    this.prayerState.prayers = [];
+    this.savePrayerWall();
+    this.renderPrayerWall();
 
+    // 2. Clear Google Sheet column C
+    await fetch("http://localhost:5001/api/prayer/clear-all", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+    });
+
+    // 3. Toast
+    this.toast("All prayers cleared 🙏", "warning");
+},
 ///////////////////////////////////
     // --------------------------------------------------
     // Initialize
@@ -510,3 +531,4 @@ window.Spirituality = Spirituality;
 window.clearSelectedRosary = () => Spirituality.clearSelectedRosary();
 window.clearAllRosary = () => Spirituality.clearAllRosary();
 window.updateBibleProgress = () => Spirituality.updateBibleProgress();
+window.clearAllPrayers = () => Spirituality.clearAllPrayers();
