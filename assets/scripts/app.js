@@ -9,6 +9,8 @@ import { initJobs } from "./Modules/OE.js";
 import { initStocks } from "./Modules/stocks.js";
 import { initFuture } from "./Modules/future.js";
 import { initMarketing} from "./Modules/marketing.js";
+import { Todo } from "./Modules/todo.js";
+
 
 // ⭐ IMPORT SPIRITUALITY MODULE ⭐
 import { Spirituality } from "./Modules/spirituality.js";
@@ -44,7 +46,15 @@ document.addEventListener("DOMContentLoaded", () => {
     initJobs?.();
     initStocks?.();
     initFuture?.();
-    initMarketing
+    initMarketing?.();
+
+    // ⭐ Initialize Todo ONLY if the TaskBoard exists
+    if (document.getElementById("task-modal-bg")) {
+        console.log("✓ TaskBoard detected — loading Todo module");
+        Todo.init();
+    } else {
+        console.log("✗ Not on TaskBoard — skipping Todo module");
+    }
 
     // ⭐ Initialize Spirituality Module ⭐
     Spirituality.init();
@@ -53,3 +63,5 @@ document.addEventListener("DOMContentLoaded", () => {
     lucide.createIcons();
     showPage("dashboard");
 });
+
+

@@ -17,6 +17,10 @@ const sheets = google.sheets({ version: "v4", auth });
 // Your sheet/tab name
 const TAB = "RelationshipwGod";
 
+export function getSheets() {
+  return sheets.spreadsheets.values;
+}
+
 // --------------------------------------------------
 // ADD A SIN (writes to first empty row starting at A4)
 // --------------------------------------------------

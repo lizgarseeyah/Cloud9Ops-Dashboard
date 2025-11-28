@@ -480,31 +480,54 @@
                 </div>
             </div>
 
-            <div id="page-detail-todo" class="absolute inset-0 bg-[#0a0a0a] p-8 hidden-page overflow-y-auto page-transition z-20">
-                <button onclick="showPage('dashboard')" class="mb-6 text-indigo-400 hover:text-white flex items-center gap-2 transition"><i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Dashboard</button>
-                <h1 class="text-3xl font-bold text-white mb-6">Detailed Tasks & Reminders</h1>
-                <div class="glass-card p-8 rounded-2xl max-w-3xl mx-auto">
-                     <h3 class="text-xl font-bold text-white mb-6">Active Tasks</h3>
-                     <div class="space-y-4">
-                        <label class="flex items-center space-x-4 p-4 bg-white/5 rounded-xl hover:bg-white/10 transition cursor-pointer">
-                            <input type="checkbox" class="w-6 h-6 rounded border-gray-600 text-indigo-600 focus:ring-indigo-500 bg-black/50">
-                            <div class="flex-1"><span class="text-gray-200 text-lg font-medium">Clean room</span><p class="text-xs text-gray-500">Housekeeping</p></div>
-                            <span class="text-xs bg-white/10 px-2 py-1 rounded text-gray-400">Today</span>
-                        </label>
-                        <label class="flex items-center space-x-4 p-4 bg-white/5 rounded-xl hover:bg-white/10 transition cursor-pointer">
-                            <input type="checkbox" class="w-6 h-6 rounded border-gray-600 text-indigo-600 focus:ring-indigo-500 bg-black/50">
-                            <div class="flex-1"><span class="text-gray-200 text-lg font-medium">Pay electricity bill</span><p class="text-xs text-gray-500">Finance</p></div>
-                            <span class="text-xs bg-red-500/20 text-red-300 px-2 py-1 rounded">Overdue</span>
-                        </label>
-                        <label class="flex items-center space-x-4 p-4 bg-white/5 rounded-xl hover:bg-white/10 transition cursor-pointer">
-                            <input type="checkbox" class="w-6 h-6 rounded border-gray-600 text-indigo-600 focus:ring-indigo-500 bg-black/50">
-                            <div class="flex-1"><span class="text-gray-200 text-lg font-medium">Schedule doctor's appointment</span><p class="text-xs text-gray-500">Health</p></div>
-                            <span class="text-xs bg-white/10 px-2 py-1 rounded text-gray-400">Tomorrow</span>
-                        </label>
-                     </div>
-                     <button class="mt-6 w-full border-2 border-dashed border-white/10 text-gray-400 py-3 rounded-xl hover:border-indigo-500 hover:text-indigo-400 transition">+ Add New Task</button>
-                </div>
+<div id="page-detail-todo" class="absolute inset-0 bg-[#0a0a0a] p-8 hidden-page overflow-y-auto page-transition z-20">
+
+    <button onclick="showPage('dashboard')" class="mb-6 text-indigo-400 hover:text-white flex items-center gap-2 transition">
+        <i data-lucide="arrow-left" class="w-5 h-5"></i> Back to Dashboard
+    </button>
+
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-white">Task Kanban Board</h1>
+
+        <!-- NEW Add Button -->
+        <button onclick="Todo.openAddModal()"
+                class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow-lg">
+            + Add Task
+        </button>
+        <!-- Delete Seleted -->
+        <button id="delete-selected-btn" class="btn-red ml-2">Delete Selected</button>
+
+        <!-- Delete All -->
+        <button onclick="Todo.deleteAllTasks()"
+                class="px-4 py-2 rounded-lg bg-red-700 hover:bg-red-600 text-white font-bold shadow-lg">
+            Delete All
+        </button>
+    </div>
+
+        <!-- INSERT KANBAN BOARD -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+            <!-- Level 1 -->
+            <div class="kanban-col" data-level="1">
+                <h3 class="kanban-title text-red-400">🔥 Level 1 — High Priority</h3>
+                <div id="col-1" class="kanban-dropzone"></div>
             </div>
+
+            <!-- Level 2 -->
+            <div class="kanban-col" data-level="2">
+                <h3 class="kanban-title text-yellow-400">⚡ Level 2 — On Deck</h3>
+                <div id="col-2" class="kanban-dropzone"></div>
+            </div>
+
+            <!-- Level 3 -->
+            <div class="kanban-col" data-level="3">
+                <h3 class="kanban-title text-blue-400">📘 Level 3 — Queue</h3>
+                <div id="col-3" class="kanban-dropzone"></div>
+            </div>
+
+        </div>
+
+    </div>
 
             <div id="page-detail-stocks" class="absolute inset-0 bg-[#0a0a0a] p-8 hidden-page overflow-y-auto page-transition z-20">
                 <button onclick="showPage('dashboard')" class="mb-6 text-indigo-400 hover:text-white flex items-center gap-2 transition"><i data-lucide="arrow-left" class="w-5 h-5"></i> Back</button>
@@ -886,8 +909,103 @@
             document.getElementById('bible-progress-text').innerText = `Day ${day} of 365`;
         }
     </script>
+    
+    <!-- =============================== -->
+    <!--   ADD / EDIT TASK MODAL        -->
+    <!-- =============================== -->
+    <div id="task-modal-bg"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center z-[999]">
+
+        <div class="glass-card p-8 rounded-2xl w-full max-w-lg border border-white/10">
+            <h2 id="task-modal-title" class="text-2xl font-bold text-white mb-6">
+                Add New Task
+            </h2>
+
+            <div class="space-y-4">
+
+                <!-- Task Title -->
+                <div>
+                    <label class="text-gray-400 text-xs uppercase tracking-wider">Task Title</label>
+                    <div class="flex items-center gap-2">
+                        <input id="task-title"
+                            type="text"
+                            class="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-white text-sm focus:outline-none focus:border-indigo-500">
+
+                        <!-- Speech Button -->
+                        <button onclick="Todo.speechToText('task-title')"
+                                class="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white transition">
+                            🎤
+                        </button>
+                    </div>
+                </div>
+
+                <!-- LEVEL -->
+                <div>
+                    <label class="text-gray-400 text-xs uppercase tracking-wider">Priority Level</label>
+
+                    <select id="task-level"
+                        class="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-white text-sm focus:outline-none focus:border-indigo-500">
+                        <option value="1">Level 1 — High Priority (Red)</option>
+                        <option value="2">Level 2 — Next (Yellow)</option>
+                        <option value="3">Level 3 — Low Priority (Blue)</option>
+                    </select>
+                </div>
+
+                <!-- Due Date -->
+                <div>
+                    <label class="text-gray-400 text-xs uppercase tracking-wider">Due Date</label>
+                    <input id="task-due-date"
+                        type="date"
+                        class="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-white text-sm focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <!-- Allotted Time -->
+                <div>
+                    <label class="text-gray-400 text-xs uppercase tracking-wider">Allotted Time (minutes)</label>
+                    <input id="task-time"
+                        type="number"
+                        min="1"
+                        class="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-white text-sm focus:outline-none focus:border-indigo-500">
+                </div>
+
+                <!-- Notes -->
+                <div>
+                    <label class="text-gray-400 text-xs uppercase tracking-wider">Notes</label>
+                    <textarea id="task-notes"
+                        class="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-white text-sm h-24 focus:outline-none focus:border-indigo-500 resize-none"
+                        placeholder="Optional notes, details, or instructions..."></textarea>
+                </div>
+
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex justify-end gap-3 mt-8">
+                <button onclick="Todo.closeModal()" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300">
+                    Cancel
+                </button>
+                <button id="task-delete-btn" class="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white hidden" onclick="Todo.deleteTask()">
+                    Delete
+                </button>
+                <button id="task-save-btn" onclick="Todo.saveNewTask()" class="px-6 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold shadow-lg shadow-indigo-900/20">
+                    Add Task
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =============================== -->
+    <!--   UNDO SNACKBAR                -->
+    <!-- =============================== -->
+    <div id="undo-snackbar"
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/10 border border-white/20 text-white px-6 py-3 rounded-xl shadow-lg hidden z-[9999]">
+        Task deleted. 
+        <button onclick="Todo.undo()" class="text-indigo-400 ml-2 hover:text-indigo-300 underline">
+            Undo
+        </button>
+    </div>
+    
     <!-- <script src="./assets/scripts/scripts.js"></script> -->
     <script type="module" src="./assets/scripts/app.js"></script>
-    
+
 </body>
 </html>
