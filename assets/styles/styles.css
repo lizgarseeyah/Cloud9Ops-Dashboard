@@ -168,3 +168,86 @@ body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #050505; 
     margin-top: 10px;
     padding: 8px;
 }
+
+/* ================================
+   WORKING — Cross-browser date picker
+   ================================ */
+
+input[type="date"] {
+    appearance: auto !important;
+    -webkit-appearance: auto !important;
+    color-scheme: dark;
+    background-color: rgba(0,0,0,0.3);
+    color: white;
+    padding-left: 12px;
+}
+
+/* Calendar icon visible */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    opacity: 1;
+    cursor: pointer;
+    margin-left: auto !important;
+}
+
+/* Remove inner buttons */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-clear-button {
+    display: none;
+}
+
+/* Ensure Chrome layouts fields properly */
+input[type="date"]::-webkit-datetime-edit {
+    color: white !important;
+    padding: 0 6px;
+}
+
+.date-icon {
+    pointer-events: none !important;
+}
+
+/* ======================================
+   Custom Large Checkbox for Task Cards
+   ====================================== */
+
+.task-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: transparent;
+    width: 26px;
+    height: 26px;
+    border: 2px solid #6366f1; /* Indigo border */
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.15s ease;
+}
+
+.task-select:checked {
+    background-color: #6366f1;
+    border-color: #6366f1;
+}
+
+.task-select:checked::after {
+    content: "✔";
+    color: white;
+    font-size: 18px;
+    position: absolute;
+    top: 0px;
+    left: 4px;
+}
+
+/* Make Kanban checkboxes bigger */
+.task-select-checkbox {
+    width: 22px;
+    height: 22px;
+    accent-color: #6366f1; /* Indigo (beautiful) */
+    cursor: pointer;
+}
+
+.task-select-checkbox:checked {
+    transform: scale(1.1);
+}
+
+

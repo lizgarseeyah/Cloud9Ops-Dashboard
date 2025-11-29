@@ -5,6 +5,7 @@
 const API_BASE = "http://localhost:5001/api/todo";
 
 const Todo = {
+    deleteHistory: [],   // 🔥 stores previously deleted tasks
     tasks: [],
     draggedId: null,
     editingTask: null,
@@ -76,7 +77,8 @@ const Todo = {
         card.innerHTML = `
             <div class="flex justify-between items-start">
                 <div class="font-semibold text-white text-lg">${task.title}</div>
-                <input type="checkbox" class="task-select-checkbox" data-row="${task.rowNumber}">
+                <input type="checkbox" class="task-select-checkbox" data-row="${task.rowNumber}"
+                    onclick="event.stopPropagation();">
             </div>
 
             <div class="text-xs text-gray-400 mt-1">${task.notes || ""}</div>
@@ -159,9 +161,6 @@ const Todo = {
     },
 
     async saveNewTask() {
-        // --- Confirmation before creating a new task ---
-        const confirmAdd = window.confirm("Add this new task?");
-        if (!confirmAdd) return;
 
         const body = {
             title: document.getElementById("task-title").value,
@@ -180,7 +179,7 @@ const Todo = {
         });
 
         // 🔥 NEW: Confirmation AFTER task is saved
-        window.alert("Task added successfully!");
+        this.showToast("Task added successfully!");
 
         this.closeModal();
         await this.loadTasks();
@@ -239,6 +238,9 @@ const Todo = {
     async deleteTask() {
         if (!this.editingTask) return;
 
+        // ⭐ Save task to history BEFORE deleting
+        this.deleteHistory = [ this.editingTask ];
+
         await fetch(`${API_BASE}/${this.editingTask.rowNumber}`, {
             method: "DELETE"
         });
@@ -248,29 +250,30 @@ const Todo = {
         this.showUndo();
     },
     /* -----------------------------------------
-   DELETE ALL TASKS
------------------------------------------- */
-    async deleteAllTasks() {
-        const confirmed = window.confirm(
-            "Delete ALL tasks from the board and Google Sheets? This cannot be undone."
-        );
-        if (!confirmed) return;
+            DELETE ALL TASKS
+    ------------------------------------------ */
+async deleteAllTasks() {
 
-        try {
-            const res = await fetch(`${API_BASE}/delete-all`, {
+    try {
+        const res = await fetch(`${API_BASE}/delete-all`, {
             method: "DELETE"
-            });
+        });
 
-            if (!res.ok) {
+        if (!res.ok) {
             throw new Error(`Server responded with ${res.status}`);
-            }
+        }
 
-            await this.loadTasks();
-        } catch (err) {
-            console.error("Delete all failed:", err);
-            alert("Could not reach the backend. Is `npm start` running in /backend?");
-            }
-    },
+        // Reload UI
+        await this.loadTasks();
+
+        // 💜 Toast instead of alert
+        this.showToast("All tasks deleted", "error");
+
+    } catch (err) {
+        console.error("Delete all failed:", err);
+        this.showToast("Could not delete tasks", "error");
+    }
+},
 
     async completeTask(rowNumber) {
         await fetch(`${API_BASE}/${rowNumber}`, { method: "DELETE" });
@@ -283,43 +286,102 @@ const Todo = {
     ------------------------------------------ */
     async deleteSelectedTasks() {
 
-    // 1. Find all checkboxes that are checked
-    const selected = Array.from(
-        document.querySelectorAll(".task-select-checkbox")
-    )
-    .filter(cb => cb.checked)
-    .map(cb => cb.dataset.row);
+        const selected = Array.from(
+            document.querySelectorAll(".task-select-checkbox")
+        )
+            .filter(cb => cb.checked)
+            .map(cb => cb.dataset.row);
 
-    // 2. If none selected, warn the user
-    if (selected.length === 0) {
-        alert("No tasks selected.");
-        return;
-    }
+        if (selected.length === 0) {
+            alert("No tasks selected.");
+            return;
+        }
 
-    // 3. Confirm bulk deletion
-    const confirmed = window.confirm(`Delete ${selected.length} selected task(s)?`);
-    if (!confirmed) return;
+        const confirmed = window.confirm(`Delete ${selected.length} selected task(s)?`);
+        if (!confirmed) return;
 
-    // 4. Delete each selected task
-    for (const row of selected) {
-        await fetch(`${API_BASE}/${row}`, {
-            method: "DELETE"
-        });
-    }
+        // ⭐ Save deleted tasks to history BEFORE deleting
+        this.deleteHistory = this.tasks.filter(t => selected.includes(String(t.rowNumber)));
 
-    // 5. Refresh UI
-    await this.loadTasks();
-    this.showUndo();
+        // Delete each selected
+        for (const row of selected) {
+            await fetch(`${API_BASE}/${row}`, { method: "DELETE" });
+        }
+
+        await this.loadTasks();
+        this.showUndo();
     },
 
     async undo() {
-        alert("Undo coming soon (optional).");
+
+        if (this.deleteHistory.length === 0) {
+            this.showToast("Nothing to undo", "info");
+            return;
+        }
+
+        // Restore tasks one by one
+        for (const task of this.deleteHistory) {
+
+            const body = {
+                title: task.title,
+                level: task.level,
+                time: task.time,
+                dueDate: task.dueDate,
+                notes: task.notes
+            };
+
+            await fetch(API_BASE, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+        }
+
+        this.deleteHistory = [];
+
+        document.getElementById("undo-btn")?.classList.add("hidden");
+        document.getElementById("undo-snackbar")?.classList.add("hidden");
+
+        this.showToast("Undo complete!", "success");
+
+        await this.loadTasks();
     },
 
     showUndo() {
+        // Show the snackbar (bottom)
         const bar = document.getElementById("undo-snackbar");
         bar.classList.remove("hidden");
+
+        // Show the undo button (top right)
+        const btn = document.getElementById("undo-btn");
+        if (btn) btn.classList.remove("hidden");
+
+        // Hide snackbar after 5 seconds (optional)
         setTimeout(() => bar.classList.add("hidden"), 5000);
+    },
+
+    showToast(message, type = "success") {
+    const container = document.getElementById("toast-container");
+    if (!container) return;
+
+    const colors = {
+        success: "bg-green-600",
+        error: "bg-red-600",
+        info: "bg-blue-600",
+        warning: "bg-yellow-400 text-black"
+    };
+
+    const toast = document.createElement("div");
+    toast.className = `${colors[type]} text-white px-4 py-2 rounded shadow-lg animate-fade-in`;
+    toast.innerText = message;
+
+    container.appendChild(toast);
+
+    // Remove toast
+    setTimeout(() => {
+        toast.classList.add("animate-fade-out");
+        setTimeout(() => toast.remove(), 300);
+        }, 2500);
     },
 
     closeModal() {

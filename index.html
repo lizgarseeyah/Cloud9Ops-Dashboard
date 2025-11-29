@@ -487,6 +487,8 @@
     </button>
 
     <div class="flex justify-between items-center mb-6">
+        <!-- Toast Container -->
+        <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
         <h1 class="text-3xl font-bold text-white">Task Kanban Board</h1>
 
         <!-- NEW Add Button -->
@@ -495,13 +497,20 @@
             + Add Task
         </button>
         <!-- Delete Seleted -->
-        <button id="delete-selected-btn" class="btn-red ml-2">Delete Selected</button>
+         <button id="delete-selected-btn" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold shadow-lg ml-2">
+            Delete Selected
+        </button>
 
         <!-- Delete All -->
         <button onclick="Todo.deleteAllTasks()"
                 class="px-4 py-2 rounded-lg bg-red-700 hover:bg-red-600 text-white font-bold shadow-lg">
             Delete All
         </button>
+
+        <button id="undo-btn" onclick="Todo.undo()" class="hidden px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold shadow-lg ml-2">
+            Undo
+        </button>
+
     </div>
 
         <!-- INSERT KANBAN BOARD -->
@@ -954,9 +963,17 @@
                 <!-- Due Date -->
                 <div>
                     <label class="text-gray-400 text-xs uppercase tracking-wider">Due Date</label>
-                    <input id="task-due-date"
-                        type="date"
-                        class="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-white text-sm focus:outline-none focus:border-indigo-500">
+
+                    <div class="relative">
+                        <input id="task-due-date"
+                            type="date"
+                            class="w-full bg-black/30 border border-white/10 rounded-xl pl-12 p-3 text-white text-sm
+                            focus:outline-none focus:border-indigo-500">
+
+                        <span class="date-icon absolute right-3 top-1/2 -translate-y-1/2 text-gray-300">
+                            📅
+                        </span>
+                    </div>
                 </div>
 
                 <!-- Allotted Time -->
@@ -992,8 +1009,10 @@
             </div>
         </div>
     </div>
-
-    <!-- =============================== -->
+    
+    <!-- <script src="./assets/scripts/scripts.js"></script> -->
+    <script type="module" src="./assets/scripts/app.js"></script>
+        <!-- =============================== -->
     <!--   UNDO SNACKBAR                -->
     <!-- =============================== -->
     <div id="undo-snackbar"
@@ -1003,9 +1022,6 @@
             Undo
         </button>
     </div>
-    
-    <!-- <script src="./assets/scripts/scripts.js"></script> -->
-    <script type="module" src="./assets/scripts/app.js"></script>
 
 </body>
 </html>
