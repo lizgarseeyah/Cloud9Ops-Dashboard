@@ -9,6 +9,7 @@ const Todo = {
     tasks: [],
     draggedId: null,
     editingTask: null,
+    lastDeleted: [],
 
     /* -----------------------------------------
        INIT
@@ -241,6 +242,9 @@ const Todo = {
         // ⭐ Save task to history BEFORE deleting
         this.deleteHistory = [ this.editingTask ];
 
+        // Store deleted task for undo
+        this.lastDeleted = [ this.editingTask ];
+
         await fetch(`${API_BASE}/${this.editingTask.rowNumber}`, {
             method: "DELETE"
         });
@@ -263,10 +267,10 @@ async deleteAllTasks() {
             throw new Error(`Server responded with ${res.status}`);
         }
 
-        // Reload UI
-        await this.loadTasks();
+        // Save everything before deleting
+        this.lastDeleted = [...this.tasks];
 
-        // 💜 Toast instead of alert
+        await this.loadTasks();
         this.showToast("All tasks deleted", "error");
 
     } catch (err) {
@@ -304,6 +308,9 @@ async deleteAllTasks() {
         this.deleteHistory = this.tasks.filter(t => selected.includes(String(t.rowNumber)));
 
         // Delete each selected
+        // Save deleted items BEFORE deleting
+        this.lastDeleted = this.tasks.filter(t => selected.includes(String(t.rowNumber)));
+
         for (const row of selected) {
             await fetch(`${API_BASE}/${row}`, { method: "DELETE" });
         }
@@ -313,16 +320,14 @@ async deleteAllTasks() {
     },
 
     async undo() {
-
-        if (this.deleteHistory.length === 0) {
-            this.showToast("Nothing to undo", "info");
+        if (!this.lastDeleted || this.lastDeleted.length === 0) {
+            this.showToast("Nothing to undo", "warning");
             return;
         }
 
-        // Restore tasks one by one
-        for (const task of this.deleteHistory) {
-
-            const body = {
+        // Restore each task
+        for (const task of this.lastDeleted) {
+            const restoreBody = {
                 title: task.title,
                 level: task.level,
                 time: task.time,
@@ -333,31 +338,29 @@ async deleteAllTasks() {
             await fetch(API_BASE, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body)
+                body: JSON.stringify(restoreBody)
             });
         }
 
-        this.deleteHistory = [];
+        this.lastDeleted = []; // Clear history
+        this.showToast("Undo restored your tasks!", "success");
 
-        document.getElementById("undo-btn")?.classList.add("hidden");
-        document.getElementById("undo-snackbar")?.classList.add("hidden");
-
-        this.showToast("Undo complete!", "success");
+        // UI refresh
+        const bar = document.getElementById("undo-snackbar");
+        const btn = document.getElementById("undo-btn");
+        if (bar) bar.classList.add("hidden");
+        if (btn) btn.classList.add("hidden");
 
         await this.loadTasks();
     },
-
+    
     showUndo() {
-        // Show the snackbar (bottom)
-        const bar = document.getElementById("undo-snackbar");
-        bar.classList.remove("hidden");
+        document.getElementById("undo-snackbar")?.classList.remove("hidden");
+        document.getElementById("undo-btn")?.classList.remove("hidden");
 
-        // Show the undo button (top right)
-        const btn = document.getElementById("undo-btn");
-        if (btn) btn.classList.remove("hidden");
-
-        // Hide snackbar after 5 seconds (optional)
-        setTimeout(() => bar.classList.add("hidden"), 5000);
+        setTimeout(() => {
+            document.getElementById("undo-snackbar")?.classList.add("hidden");
+        }, 5000);
     },
 
     showToast(message, type = "success") {
