@@ -552,20 +552,22 @@
                 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="lg:col-span-1 space-y-6">
-                        <div class="glass-card p-6 rounded-2xl">
-                            <h3 class="text-lg font-bold mb-4">Quick Trade</h3>
+                        <div class="glass-card p-6 rounded-2xl space-y-4">
+                            <h3 class="text-lg font-bold">Automation Controls</h3>
+
                             <div class="space-y-3">
-                                <input type="text" placeholder="Ticker (e.g. AAPL)" class="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-white text-sm">
-                                <input type="number" placeholder="Quantity" class="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-white text-sm">
-                                <div class="grid grid-cols-2 gap-2">
-                                    <button class="bg-green-600 hover:bg-green-500 text-white font-bold py-2 rounded-lg transition">BUY</button>
-                                    <button class="bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg transition">SELL</button>
-                                </div>
+                                <button id="runScreenerBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 rounded-lg transition">Run Screener</button>
+                                <button id="executeTradesBtn" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-2 rounded-lg transition">Execute Proposed Trades</button>
+                            </div>
+
+                            <!-- ⭐ AUTOMATION OUTPUT LOG -->
+                            <div id="automationOutput" class="bg-black/30 border border-white/10 rounded-xl p-4 h-32 overflow-y-auto text-xs text-gray-300 custom-scrollbar">
+                                <p class="text-gray-500 italic">Automation output will appear here...</p>
                             </div>
                         </div>
                          <div class="glass-card p-6 rounded-2xl">
                             <div class="flex justify-between items-center mb-4"><h3 class="text-lg font-bold">Market News</h3><span class="text-xs text-gray-500">Scraper Active</span></div>
-                            <div class="space-y-3 max-h-60 overflow-y-auto custom-scrollbar">
+                            <div id="marketNewsContainer" class="space-y-3 max-h-60 overflow-y-auto custom-scrollbar">
                                 <div class="text-xs border-b border-white/5 pb-2">
                                     <span class="text-green-400 font-bold">COINDESK</span> <span class="text-gray-500 ml-1">12m ago</span>
                                     <p class="text-gray-300 mt-1 hover:text-white cursor-pointer">Bitcoin surges past $65k as institutional interest grows.</p>
@@ -575,6 +577,19 @@
                                     <p class="text-gray-300 mt-1 hover:text-white cursor-pointer">Tech stocks rally ahead of earnings season.</p>
                                 </div>
                             </div>
+                        </div>
+                        <!--=======================
+                            X.com Insider Trades Feed
+                        =========================== -->
+                        <div class="glass-card p-6 rounded-2xl mt-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-lg font-bold">X.com Insider Trades</h3>
+                            <span class="text-xs text-gray-500">Live Feed</span>
+                        </div>
+
+                        <div id="xfeedContainer" class="space-y-3 max-h-60 overflow-y-auto custom-scrollbar text-xs">
+                            <div class="text-gray-500">Loading X insider data...</div>
+                        </div>
                         </div>
                     </div>
                     <div class="lg:col-span-2 glass-card p-6 rounded-2xl">
@@ -586,24 +601,15 @@
                         <div class="overflow-x-auto">
                             <table class="w-full text-sm text-left text-gray-400">
                                 <thead class="text-xs uppercase border-b border-white/10">
-                                    <tr><th class="px-4 py-3">Asset</th><th class="px-4 py-3">Balance</th><th class="px-4 py-3">Price</th><th class="px-4 py-3">Value</th><th class="px-4 py-3">Action</th></tr>
+                                    <tr>
+                                        <th class="px-4 py-3">Asset</th>
+                                        <th class="px-4 py-3">Balance</th>
+                                        <th class="px-4 py-3">Price</th>
+                                        <th class="px-4 py-3">Value</th>
+                                        <th class="px-4 py-3">Action</th>
+                                    </tr>
                                 </thead>
-                                <tbody class="divide-y divide-white/5">
-                                    <tr class="hover:bg-white/5">
-                                        <td class="px-4 py-3 font-bold text-white">Bitcoin</td>
-                                        <td class="px-4 py-3">0.15 BTC</td>
-                                        <td class="px-4 py-3">$64,200</td>
-                                        <td class="px-4 py-3 font-mono">$9,630</td>
-                                        <td class="px-4 py-3 text-blue-400 cursor-pointer">Trade</td>
-                                    </tr>
-                                    <tr class="hover:bg-white/5">
-                                        <td class="px-4 py-3 font-bold text-white">NVIDIA</td>
-                                        <td class="px-4 py-3">10 Shares</td>
-                                        <td class="px-4 py-3">$890</td>
-                                        <td class="px-4 py-3 font-mono">$8,900</td>
-                                        <td class="px-4 py-3 text-blue-400 cursor-pointer">Trade</td>
-                                    </tr>
-                                </tbody>
+                                <tbody id="holdingsTableBody" class="divide-y divide-white/5"></tbody>
                             </table>
                         </div>
                     </div>

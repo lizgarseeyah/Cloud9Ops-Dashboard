@@ -19,7 +19,7 @@ import { Spirituality } from "./Modules/spirituality.js";
 // PAGE NAVIGATION
 // ==============================
 export function showPage(pageId) {
-    const pages = document.querySelectorAll("[id^='page-']");
+    const pages = document.querySelectorAll('[id^="page-"]');
     pages.forEach(page => {
         page.classList.add("hidden-page");
         page.classList.remove("visible-page");
@@ -29,6 +29,12 @@ export function showPage(pageId) {
     if (active) {
         active.classList.remove("hidden-page");
         active.classList.add("visible-page");
+    }
+
+    // ⭐ Page-specific logic goes here
+    if (pageId === "detail-stocks") {
+        console.log("📈 Stocks page is now visible, initializing...");
+        setTimeout(() => initStocks(), 150);
     }
 
     lucide.createIcons();
