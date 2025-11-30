@@ -249,5 +249,329 @@ input[type="date"]::-webkit-datetime-edit {
 .task-select-checkbox:checked {
     transform: scale(1.1);
 }
+/* =============================== */
+/* JOBS TOASTS                     */
+/* =============================== */
 
+.job-toast {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: jobToastFadeIn 0.25s ease-out;
+}
 
+@keyframes jobToastFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Job Serch buttons */
+.btn-search {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white;
+}
+.btn-search:hover {
+    background: rgba(255,255,255,0.14);
+}
+
+.btn-apply {
+    background-color: #4f46e5;
+}
+.btn-apply:hover {
+    background-color: #6366f1;
+}
+.btn-follow {
+    background-color: #7c3aed;
+}
+.btn-follow:hover {
+    background-color: #8b5cf6;
+}
+.btn-delete {
+    background-color: #dc2626;
+}
+.btn-delete:hover {
+    background-color: #ef4444;
+}
+.job-checkbox-ui {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #6366f1; /* Indigo */
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.15s ease;
+    position: relative;
+}
+
+.job-checkbox-ui:checked {
+    background-color: #6366f1;
+    border-color: #6366f1;
+}
+
+.job-checkbox-ui:checked::after {
+    content: "✔";
+    color: white;
+    font-size: 16px;
+    position: absolute;
+    top: -1px;
+    left: 4px;
+}
+
+/* ============================================
+   LIZ'S UNIFIED LUXURY BUTTON SYSTEM (GLOBAL)
+   ============================================ */
+
+/* Base Button Reset */
+.lx-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    border: 1px solid transparent;
+    backdrop-filter: blur(12px);
+    user-select: none;
+}
+
+/* Glass Buttons (neutral & prep) */
+.lx-glass {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.9);
+}
+.lx-glass:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* Primary Indigo */
+.lx-primary {
+    background: #4f46e5;
+    color: white;
+}
+.lx-primary:hover {
+    background: #6366f1;
+    transform: translateY(-1px);
+}
+
+/* Purple - Follow-up / Creativity */
+.lx-purple {
+    background: #7c3aed;
+    color: white;
+}
+.lx-purple:hover {
+    background: #8b5cf6;
+    transform: translateY(-1px);
+}
+
+/* Danger Red */
+.lx-danger {
+    background: #dc2626;
+    color: white;
+}
+.lx-danger:hover {
+    background: #ef4444;
+    transform: translateY(-1px);
+}
+
+/* Success / Apply */
+.lx-success {
+    background: #10b981;
+    color: white;
+}
+.lx-success:hover {
+    background: #34d399;
+    transform: translateY(-1px);
+}
+
+/* Subtle Golden Accent (optional special actions) */
+.lx-gold {
+    background: #c89b3c;
+    color: white;
+}
+.lx-gold:hover {
+    background: #d9b05a;
+    transform: translateY(-1px);
+}
+
+/* Optional Press Animation */
+.lx-btn:active {
+    transform: scale(0.96);
+}
+
+/* GLOBAL NICE CHECKBOX (matches ToDo aesthetic) */
+
+.lx-checkbox {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: 2px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.05);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.lx-checkbox:hover {
+    border-color: rgba(255,255,255,0.45);
+}
+
+.lx-checkbox:checked {
+    background: #6366f1;
+    border-color: #6366f1;
+}
+
+.lx-checkbox:checked::after {
+    content: "✔";
+    position: absolute;
+    top: -1px;
+    left: 5px;
+    font-size: 15px;
+    color: white;
+    font-weight: bold;
+}
+
+/* LIGHT BLUE GLASS — Search Jobs */
+.lx-glass-blue {
+    background: rgba(59, 130, 246, 0.12); /* blue-500 */
+    border: 1px solid rgba(59, 130, 246, 0.25);
+    color: #93c5fd; /* blue-300 */
+}
+.lx-glass-blue:hover {
+    background: rgba(59, 130, 246, 0.18);
+    border-color: rgba(59, 130, 246, 0.35);
+}
+
+/* GOLD GLASS — Interview Prep */
+.lx-glass-gold {
+    background: rgba(234, 179, 8, 0.12); /* amber-500 */
+    border: 1px solid rgba(234, 179, 8, 0.25);
+    color: #fcd34d; /* amber-300 */
+}
+.lx-glass-gold:hover {
+    background: rgba(234, 179, 8, 0.18);
+    border-color: rgba(234, 179, 8, 0.35);
+}
+
+/* ============================
+   BOLD BLUE — Search Jobs
+============================ */
+.lx-blue {
+    background-color: #3b82f6; /* blue-500 */
+    color: white;
+    border: none;
+}
+.lx-blue:hover {
+    background-color: #2563eb; /* blue-600 */
+}
+
+/* ============================
+   BOLD GOLD — Interview Prep
+============================ */
+.lx-gold {
+    background-color: #f59e0b; /* amber-500 */
+    color: white;
+    border: none;
+}
+.lx-gold:hover {
+    background-color: #d97706; /* amber-600 */
+}
+/* ============================
+   UNIFIED JOB CARD BASE STYLE
+============================ */
+/* =======================================================
+   BEZELLED COLOR OUTLINE FOR JOB CARDS (screenshot accurate)
+   ======================================================= */
+.job-card {
+    background: rgba(255,255,255,0.05) !important;
+    border-radius: 16px !important;
+    padding: 18px !important;
+    border-width: 2px !important;     /* thicker, bezel look */
+    transition: 0.2s ease;
+}
+
+/* Wishlist */
+.job-card[data-jobtype="wishlist"] {
+    border-color: rgba(148,163,184,0.6) !important;
+}
+
+/* Applied */
+.job-card[data-jobtype="applied"] {
+    border-color: rgba(234,179,8,0.85) !important;
+}
+
+/* Interview */
+.job-card[data-jobtype="interview"] {
+    border-color: rgba(59,130,246,0.85) !important;
+}
+
+/* Offers */
+.job-card[data-jobtype="offers"] {
+    border-color: rgba(34,197,94,0.85) !important;
+}
+
+/* Rejected */
+.job-card[data-jobtype="rejected"] {
+    border-color: rgba(239,68,68,0.85) !important;
+}
+
+/* ============================
+   CATEGORY COLOR ACCENTS
+   (Matches your columns)
+============================ */
+/* Wishlist — Gray */
+.job-card[data-status="wishlist"] {
+    border-left: 3px solid rgba(148,163,184,0.7); /* Slate-400 */
+}
+
+/* Applied — Yellow */
+.job-card[data-status="applied"] {
+    border-left: 3px solid rgba(234,179,8,0.8); /* Yellow-500 */
+}
+
+/* Interview — Blue */
+.job-card[data-status="interview"] {
+    border-left: 3px solid rgba(59,130,246,0.8); /* Blue-500 */
+}
+
+/* Offers — Green */
+.job-card[data-status="offers"] {
+    border-left: 3px solid rgba(34,197,94,0.8); /* Green-500 */
+}
+
+/* Rejected — Red */
+.job-card[data-status="rejected"] {
+    border-left: 3px solid rgba(239,68,68,0.8); /* Red-500 */
+}
+
+/* ============================
+   Checkbox (top-right)
+============================ */
+.job-checkbox-ui {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 22px;
+    height: 22px;
+    accent-color: #6366f1;
+    background: rgba(255,255,255,0.15);
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+    transform: scale(1.25);
+}

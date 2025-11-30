@@ -645,44 +645,140 @@
                 </div>
              </div>
 
-             <div id="page-detail-jobs" class="absolute inset-0 bg-[#0a0a0a] p-8 hidden-page overflow-y-auto page-transition z-20">
-                <button onclick="showPage('dashboard')" class="mb-6 text-indigo-400 hover:text-white flex items-center gap-2 transition"><i data-lucide="arrow-left" class="w-5 h-5"></i> Back</button>
+            <!-- Job Posts -->
+            <div id="page-detail-jobs" class="absolute inset-0 bg-[#0a0a0a] p-8 hidden-page overflow-y-auto page-transition z-20">
+                <button onclick="showPage('dashboard')" class="mb-6 text-indigo-400 hover:text-white flex items-center gap-2 transition">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i> Back
+                </button>
+
                 <div class="flex justify-between items-center mb-6">
-                     <h1 class="text-3xl font-bold text-white">Job Hunt Command Center</h1>
-                     <div class="flex gap-2">
-                        <button class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl text-sm font-bold">Interview Prep</button>
-                        <button class="bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-xl text-sm font-bold shadow-lg">+ New Application</button>
+                    <h1 class="text-3xl font-bold text-white">Job Hunt Command Center</h1>
+
+                    <!-- JOB ACTION TOOLBAR -->
+                    <div class="flex gap-2 mt-4 mb-6">
+                        <button id="jobs-search-btn" class="lx-btn lx-blue">Search Jobs</button>
+                        <button id="jobs-apply-btn" class="lx-btn lx-primary">Apply</button>
+                        <button id="jobs-followup-btn" class="lx-btn lx-purple">Follow-Up</button>
+                        <button id="jobs-delete-btn" class="lx-btn lx-danger">Delete</button>
+                        <button id="jobs-prep-btn" class="lx-btn lx-gold">Interview Prep</button>
                     </div>
                 </div>
+
+                <!-- GRID -->
                 <div class="grid grid-cols-1 md:grid-cols-5 gap-4 h-[calc(100vh-200px)]">
+
+                    <!-- WISHLIST -->
                     <div class="glass-card p-3 rounded-xl flex flex-col">
-                        <h3 class="font-bold text-gray-500 text-xs uppercase tracking-wider mb-3 pb-2 border-b border-white/5">Wishlist</h3>
+                        <h3 class="font-bold text-gray-500 text-xs uppercase tracking-wider mb-3 pb-2 border-b border-white/5">
+                            Wishlist
+                        </h3>
+
                         <div class="space-y-2 flex-1 overflow-y-auto custom-scrollbar">
-                            <div class="bg-white/5 p-3 rounded-lg border border-dashed border-white/10 hover:border-white/30 cursor-pointer">
-                                <div class="font-bold">OpenAI</div>
+
+                            <div class="job-card bg-white/5 p-3 rounded-lg border border-dashed border-white/10 hover:border-white/30 cursor-pointer relative"
+                                data-jobtype="wishlist">
+
+                                <!-- Checkbox -->
+                                <input type="checkbox" class="absolute top-2 right-2 w-5 h-5 rounded job-checkbox-ui" data-jobid="wishlist-openai">
+
+                                <div class="font-bold mt-6">OpenAI</div>
                                 <div class="text-xs text-gray-500 mt-1">Product Role</div>
-                                <div class="flex justify-between mt-2"><button class="text-[10px] text-blue-400">Apply</button><button class="text-[10px] text-red-400">Remove</button></div>
+
+                                <div class="flex justify-between mt-2">
+                                    <button class="text-[10px] text-blue-400">Apply</button>
+                                    <button class="text-[10px] text-red-400">Remove</button>
+                                </div>
+
                             </div>
+
                         </div>
                     </div>
+
+                    <!-- APPLIED -->
                     <div class="glass-card p-3 rounded-xl flex flex-col">
                         <h3 class="font-bold text-yellow-500 text-xs uppercase tracking-wider mb-3 pb-2 border-b border-white/5">Applied</h3>
-                         <div class="bg-white/5 p-3 rounded-lg border-l-2 border-yellow-500 mb-2"><div class="font-bold">Google</div><div class="text-xs text-gray-400 mt-1">PM Role</div></div>
+
+                        <div class="job-card bg-white/5 p-3 rounded-lg border border-yellow-500/40 hover:border-yellow-500 cursor-pointer relative"
+                            data-jobtype="applied">
+
+                            <!-- Checkbox -->
+                            <input type="checkbox" class="absolute top-2 right-2 w-5 h-5 rounded job-checkbox-ui" data-jobid="applied-google">
+
+                            <div class="font-bold mt-6">Google</div>
+                            <div class="text-xs text-gray-500 mt-1">PM Role</div>
+
+                            <div class="flex justify-between mt-2">
+                                <button class="text-[10px] text-blue-400">Check Status</button>
+                                <button class="text-[10px] text-red-400">Remove</button>
+                            </div>
+
+                        </div>
                     </div>
+
+                    <!-- INTERVIEW -->
                     <div class="glass-card p-3 rounded-xl flex flex-col">
                         <h3 class="font-bold text-blue-500 text-xs uppercase tracking-wider mb-3 pb-2 border-b border-white/5">Interview</h3>
-                         <div class="bg-white/5 p-3 rounded-lg border-l-2 border-blue-500 mb-2"><div class="font-bold">Vercel</div><div class="text-xs text-gray-400 mt-1">DevRel</div></div>
+
+                        <div class="job-card bg-white/5 p-3 rounded-lg border border-blue-500/40 hover:border-blue-500 cursor-pointer relative"
+                            data-jobtype="interview">
+
+                            <!-- Checkbox -->
+                            <input type="checkbox" class="absolute top-2 right-2 w-5 h-5 rounded job-checkbox-ui" data-jobid="interview-vercel">
+
+                            <div class="font-bold mt-6">Vercel</div>
+                            <div class="text-xs text-gray-500 mt-1">DevRel</div>
+
+                            <div class="flex justify-between mt-2">
+                                <button class="text-[10px] text-blue-400">Prep</button>
+                                <button class="text-[10px] text-red-400">Remove</button>
+                            </div>
+
+                        </div>
                     </div>
+
+                    <!-- OFFERS -->
                     <div class="glass-card p-3 rounded-xl flex flex-col">
                         <h3 class="font-bold text-green-500 text-xs uppercase tracking-wider mb-3 pb-2 border-b border-white/5">Offers</h3>
-                         <div class="bg-white/5 p-3 rounded-lg border-l-2 border-green-500"><div class="font-bold">Startup Inc</div><div class="text-xs text-gray-400 mt-1">Tech Lead</div></div>
+
+                        <div class="job-card bg-white/5 p-3 rounded-lg border border-green-500/40 hover:border-green-500 cursor-pointer relative"
+                            data-jobtype="offers">
+
+                            <!-- Checkbox -->
+                            <input type="checkbox" class="absolute top-2 right-2 w-5 h-5 rounded job-checkbox-ui" data-jobid="offers-startup">
+
+                            <div class="font-bold mt-6">Startup Inc</div>
+                            <div class="text-xs text-gray-500 mt-1">Tech Lead</div>
+
+                            <div class="flex justify-between mt-2">
+                                <button class="text-[10px] text-blue-400">Accept</button>
+                                <button class="text-[10px] text-red-400">Decline</button>
+                            </div>
+
+                        </div>
                     </div>
-                     <div class="glass-card p-3 rounded-xl flex flex-col opacity-60">
+
+                    <!-- REJECTED -->
+                    <div class="glass-card p-3 rounded-xl flex flex-col opacity-60">
                         <h3 class="font-bold text-red-500 text-xs uppercase tracking-wider mb-3 pb-2 border-b border-white/5">Rejected</h3>
-                         <div class="bg-white/5 p-3 rounded-lg border-l-2 border-red-500"><div class="font-bold text-gray-500 line-through">Amazon</div></div>
+
+                        <div class="job-card bg-white/5 p-3 rounded-lg border border-red-500/40 hover:border-red-500 cursor-pointer relative"
+                            data-jobtype="rejected">
+
+                            <!-- Checkbox -->
+                            <input type="checkbox" class="absolute top-2 right-2 w-5 h-5 rounded job-checkbox-ui" data-jobid="rejected-amazon">
+
+                            <div class="font-bold mt-6 text-gray-500 line-through">Amazon</div>
+
+                            <div class="flex justify-between mt-2">
+                                <button class="text-[10px] text-gray-500">Review Notes</button>
+                                <button class="text-[10px] text-red-400">Remove</button>
+                            </div>
+
+                        </div>
                     </div>
+
                 </div>
-             </div>
+            </div>
 
              <div id="page-detail-marketing" class="absolute inset-0 bg-[#0a0a0a] p-8 hidden-page overflow-y-auto page-transition z-20">
                 <button onclick="showPage('dashboard')" class="mb-6 text-indigo-400 hover:text-white flex items-center gap-2 transition"><i data-lucide="arrow-left" class="w-5 h-5"></i> Back</button>

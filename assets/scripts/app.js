@@ -10,7 +10,8 @@ import { initStocks } from "./Modules/stocks.js";
 import { initFuture } from "./Modules/future.js";
 import { initMarketing} from "./Modules/marketing.js";
 import { Todo } from "./Modules/todo.js";
-
+import { initializeJobToolbar } from "./Modules/OE.js";
+//import { initJobs } from "../Modules/OE.js";
 
 // ⭐ IMPORT SPIRITUALITY MODULE ⭐
 import { Spirituality } from "./Modules/spirituality.js";
@@ -53,6 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initStocks?.();
     initFuture?.();
     initMarketing?.();
+    initializeJobToolbar();
 
     // ⭐ Initialize Todo ONLY if the TaskBoard exists
     if (document.getElementById("task-modal-bg")) {
