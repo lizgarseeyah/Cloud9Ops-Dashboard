@@ -4,18 +4,15 @@
 
 // IMPORT MODULES
 import { initChat } from "./Modules/chat.js";
-import { initMicrosoft } from "./Modules/microsoft.js";
 import { initJobs } from "./Modules/OE.js";
 import { initStocks } from "./Modules/stocks.js";
 import { initFuture } from "./Modules/future.js";
-import { initMarketing} from "./Modules/marketing.js";
 import { Todo } from "./Modules/todo.js";
 import { initializeJobToolbar } from "./Modules/OE.js";
-//import { initJobs } from "../Modules/OE.js";
-
 // ⭐ IMPORT SPIRITUALITY MODULE ⭐
 import { Spirituality } from "./Modules/spirituality.js";
-
+import { Marketing } from './Modules/contentcreator.js';
+import { Microsoft } from './Modules/microsoft.js';
 // ==============================
 // PAGE NAVIGATION
 // ==============================
@@ -49,12 +46,12 @@ window.showPage = showPage;
 document.addEventListener("DOMContentLoaded", () => {
     // Initialize other modules
     initChat?.();
-    initMicrosoft?.();
     initJobs?.();
     initStocks?.();
     initFuture?.();
-    initMarketing?.();
     initializeJobToolbar();
+    Marketing.init();
+    Microsoft.init();
 
     // ⭐ Initialize Todo ONLY if the TaskBoard exists
     if (document.getElementById("task-modal-bg")) {

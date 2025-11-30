@@ -501,57 +501,100 @@
                 </div>
              </div>
 
-             <!-- 5. MARKETING --> 
-             <div id="page-detail-marketing" class="absolute inset-0 bg-[#0a0a0a] p-8 hidden-page overflow-y-auto page-transition z-20">
-                <button onclick="showPage('dashboard')" class="mb-6 text-indigo-400 hover:text-white flex items-center gap-2 transition"><i data-lucide="arrow-left" class="w-5 h-5"></i> Back</button>
-                <h1 class="text-3xl font-bold text-white mb-6">Content Studio</h1>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="glass-card p-6 rounded-2xl lg:col-span-2">
-                        <h3 class="text-lg font-bold mb-4">Create & Edit</h3>
-                        <textarea class="w-full h-40 bg-black/30 border border-white/10 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-pink-500 mb-4 font-mono" placeholder="Write your caption, script, or blog post here..."></textarea>
-                        <div class="flex flex-wrap gap-3">
-                            <button class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-xs flex items-center gap-2">📂 Import Media</button>
-                            <button class="bg-purple-600/30 hover:bg-purple-600/50 text-purple-300 px-4 py-2 rounded-lg text-xs flex items-center gap-2">✨ AI Optimize</button>
-                            <div class="flex-1"></div>
-                            <button class="bg-pink-600 hover:bg-pink-500 px-6 py-2 rounded-lg text-sm font-bold shadow-lg">Post / Schedule</button>
+             <!-- 5. Content Creator Hub --> 
+<div id="page-detail-marketing" class="absolute inset-0 bg-[#0a0a0a] p-8 hidden-page overflow-y-auto page-transition z-20">
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <button onclick="showPage('dashboard')" class="text-indigo-400 hover:text-white flex items-center gap-2 transition mb-2">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i> Back
+            </button>
+            <h1 class="text-3xl font-bold text-white">Content Creator Hub</h1>
+            <p class="text-gray-400 text-sm">Manage your digital empire.</p>
+        </div>
+        <div class="flex gap-2">
+            <button class="lx-btn lx-glass" onclick="Marketing.refreshStats()">🔄 Refresh Metrics</button>
+            <button class="lx-btn lx-primary">+ New Campaign</button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <div class="lg:col-span-4 space-y-6">
+            
+            <div class="glass-card p-6 rounded-2xl">
+                <h3 class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-4">Connected Identities</h3>
+                
+                <div id="marketing-accounts-list" class="space-y-3 max-h-[500px] overflow-y-auto custom-scrollbar pr-2">
+                    </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl bg-gradient-to-br from-indigo-900/20 to-purple-900/10">
+                <h3 class="text-white font-bold mb-4">Total Reach</h3>
+                <div class="flex justify-between items-end">
+                    <span class="text-4xl font-bold text-white" id="total-followers-display">0</span>
+                    <span class="text-green-400 text-sm font-bold mb-1">▲ 12%</span>
+                </div>
+                <div class="w-full bg-white/10 h-1.5 rounded-full mt-4 overflow-hidden">
+                    <div class="bg-indigo-500 h-full w-[70%]" style="width: 65%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-8 space-y-6">
+            
+            <div class="glass-card p-6 rounded-2xl border-t border-white/10">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold text-white">Studio Workbench</h3>
+                    <select id="post-platform-select" class="bg-black/30 text-xs border border-white/20 rounded-lg px-2 py-1 text-white">
+                        <option value="all">🚀 Cross-Post (All)</option>
+                        <option value="x">X / Twitter</option>
+                        <option value="insta">Instagram / Threads</option>
+                        <option value="tiktok">TikTok</option>
+                    </select>
+                </div>
+
+                <textarea id="content-input" class="w-full h-32 bg-black/30 border border-white/10 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-indigo-500 mb-4 font-mono transition-all" placeholder="Draft your next viral post..."></textarea>
+                
+                <div class="flex flex-wrap gap-3 items-center">
+                    <button class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 transition" title="Upload Media">📷</button>
+                    <button class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 transition" title="Add Hashtags">#️⃣</button>
+                    <div class="h-6 w-px bg-white/10 mx-1"></div>
+                    <button class="px-3 py-2 rounded-lg bg-purple-600/20 text-purple-300 hover:bg-purple-600/30 text-xs border border-purple-500/30 transition flex items-center gap-2">
+                        ✨ AI Magic Rewrite
+                    </button>
+                    
+                    <div class="flex-1"></div>
+                    
+                    <button class="lx-btn lx-success">Schedule</button>
+                    <button class="lx-btn lx-primary">Post Now</button>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl">
+                <h3 class="text-lg font-bold text-white mb-4">Upcoming Schedule</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 bg-white/5 rounded-xl border-l-4 border-pink-500 flex items-start gap-3">
+                        <div class="bg-pink-500/20 p-2 rounded-lg text-pink-400">📸</div>
+                        <div>
+                            <div class="text-xs text-pink-400 font-bold uppercase">Instagram</div>
+                            <div class="font-bold text-sm mt-1">"Day in the Life" Reel</div>
+                            <div class="text-xs text-gray-400 mt-1">Tomorrow, 9:00 AM</div>
                         </div>
                     </div>
-                    <div class="space-y-6">
-                        <div class="glass-card p-6 rounded-2xl">
-                             <h3 class="text-lg font-bold mb-4">Latest Trends</h3>
-                             <ul class="space-y-2 text-sm">
-                                 <li class="text-pink-400">#TechLife <span class="text-gray-500 text-xs">Trending up</span></li>
-                                 <li class="text-blue-400">#CloudComputing <span class="text-gray-500 text-xs">Steady</span></li>
-                                 <li class="text-purple-400">#DayInTheLife <span class="text-gray-500 text-xs">Viral</span></li>
-                             </ul>
-                        </div>
-                        <div class="glass-card p-6 rounded-2xl">
-                             <h3 class="text-lg font-bold mb-4">Engagement</h3>
-                             <div class="flex justify-between text-center">
-                                 <div><div class="text-xl font-bold">152</div><div class="text-xs text-gray-500">Likes</div></div>
-                                 <div><div class="text-xl font-bold">24</div><div class="text-xs text-gray-500">Comments</div></div>
-                                 <div><div class="text-xl font-bold">12</div><div class="text-xs text-gray-500">Shares</div></div>
-                             </div>
-                             <button class="w-full mt-4 text-xs bg-white/5 hover:bg-white/10 py-2 rounded">Respond to Comments</button>
-                        </div>
-                    </div>
-                    <div class="glass-card p-6 rounded-2xl lg:col-span-3">
-                        <h3 class="text-lg font-bold mb-4">Upcoming Schedule</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="p-4 bg-white/5 rounded-xl border-l-4 border-pink-500">
-                                <span class="text-xs text-pink-400 font-bold">INSTAGRAM</span>
-                                <div class="font-bold mt-1">"Day in the Life" Reel</div>
-                                <div class="text-xs text-gray-400 mt-2">Tomorrow, 9:00 AM</div>
-                            </div>
-                            <div class="p-4 bg-white/5 rounded-xl border-l-4 border-blue-500">
-                                <span class="text-xs text-blue-400 font-bold">LINKEDIN</span>
-                                <div class="font-bold mt-1">"AI in 2025" Article</div>
-                                <div class="text-xs text-gray-400 mt-2">Wed, 10:00 AM</div>
-                            </div>
+                    <div class="p-4 bg-white/5 rounded-xl border-l-4 border-white/50 flex items-start gap-3">
+                        <div class="bg-white/10 p-2 rounded-lg text-white">✕</div>
+                        <div>
+                            <div class="text-xs text-gray-400 font-bold uppercase">X / Twitter</div>
+                            <div class="font-bold text-sm mt-1">AI Thread (1/5)</div>
+                            <div class="text-xs text-gray-400 mt-1">Wed, 10:00 AM</div>
                         </div>
                     </div>
                 </div>
-             </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
             <!-- 6. MICROSOFT PROJECTS DETAIL PAGE -->
             <div id="page-detail-microsoft" class="absolute inset-0 bg-[#0a0a0a] p-8 hidden-page overflow-y-auto page-transition z-20">

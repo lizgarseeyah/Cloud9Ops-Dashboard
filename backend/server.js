@@ -31,7 +31,7 @@ app.use("/api/sins", sinsRoutes);
 app.use("/api/prayer", prayerRoutes);
 app.use("/api/todo", todoRoutes);
 app.use("/api/stocks", stocksRouter);
-
+app.use("/api/microsoft", microsoftRouter); // <--- ADD THIS
 const PORT = 5001;
 app.listen(PORT, () => {
   console.log(`Backend running on http://localhost:${PORT}`);

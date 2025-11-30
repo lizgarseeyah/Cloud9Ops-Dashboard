@@ -59,10 +59,13 @@
                     <span>💼</span> <span class="hidden lg:block font-medium">Job Apps</span>
                 </button>
                 <button onclick="showPage('detail-marketing')" class="w-full flex items-center gap-4 p-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition text-left">
-                    <span>📢</span> <span class="hidden lg:block font-medium">Marketing</span>
+                    <span>📢</span> <span class="hidden lg:block font-medium">Content Creator Hub</span>
                 </button>
                 <button onclick="showPage('detail-microsoft')" class="w-full flex items-center gap-4 p-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition text-left">
-                    <span>💻</span> <span class="hidden lg:block font-medium">MS Projects</span>
+                    <span>💻</span> <span class="hidden lg:block font-medium">Microsoft Assistant</span>
+                </button>
+                <button onclick="showPage('detail-health')" class="w-full flex items-center gap-4 p-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition text-left group">
+                    <span class="group-hover:animate-pulse">❤️</span> <span class="hidden lg:block font-medium">Bio-OS & Health</span>
                 </button>
                 <button onclick="showPage('detail-future')" class="w-full flex items-center gap-4 p-3 rounded-xl text-gray-400 hover:bg-white/5 hover:text-white transition text-left">
                     <span>🔮</span> <span class="hidden lg:block font-medium">Future</span>
@@ -780,105 +783,703 @@
                 </div>
             </div>
 
-             <div id="page-detail-marketing" class="absolute inset-0 bg-[#0a0a0a] p-8 hidden-page overflow-y-auto page-transition z-20">
-                <button onclick="showPage('dashboard')" class="mb-6 text-indigo-400 hover:text-white flex items-center gap-2 transition"><i data-lucide="arrow-left" class="w-5 h-5"></i> Back</button>
-                <h1 class="text-3xl font-bold text-white mb-6">Content Studio</h1>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="glass-card p-6 rounded-2xl lg:col-span-2">
-                        <h3 class="text-lg font-bold mb-4">Create & Edit</h3>
-                        <textarea class="w-full h-40 bg-black/30 border border-white/10 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-pink-500 mb-4 font-mono" placeholder="Write your caption, script, or blog post here..."></textarea>
-                        <div class="flex flex-wrap gap-3">
-                            <button class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-xs flex items-center gap-2">📂 Import Media</button>
-                            <button class="bg-purple-600/30 hover:bg-purple-600/50 text-purple-300 px-4 py-2 rounded-lg text-xs flex items-center gap-2">✨ AI Optimize</button>
-                            <div class="flex-1"></div>
-                            <button class="bg-pink-600 hover:bg-pink-500 px-6 py-2 rounded-lg text-sm font-bold shadow-lg">Post / Schedule</button>
-                        </div>
+<div id="page-detail-marketing" class="absolute inset-0 bg-[#0a0a0a] p-8 hidden-page overflow-y-auto page-transition z-20">
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <button onclick="showPage('dashboard')" class="text-indigo-400 hover:text-white flex items-center gap-2 transition mb-2">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i> Back
+            </button>
+            <h1 class="text-3xl font-bold text-white">Content Creator Hub</h1>
+            <p class="text-gray-400 text-sm">Orchestrate your digital presence.</p>
+        </div>
+        <div class="flex gap-2">
+            <button class="lx-btn lx-glass" onclick="Marketing.refreshStats()">🔄 Refresh Metrics</button>
+            <button class="lx-btn lx-primary">+ New Campaign</button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <div class="lg:col-span-4 space-y-6">
+            
+            <div class="glass-card p-6 rounded-2xl">
+                <h3 class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-4">Connected Identities</h3>
+                <div id="marketing-accounts-list" class="space-y-3 max-h-[400px] overflow-y-auto custom-scrollbar pr-2">
                     </div>
-                    <div class="space-y-6">
-                        <div class="glass-card p-6 rounded-2xl">
-                             <h3 class="text-lg font-bold mb-4">Latest Trends</h3>
-                             <ul class="space-y-2 text-sm">
-                                 <li class="text-pink-400">#TechLife <span class="text-gray-500 text-xs">Trending up</span></li>
-                                 <li class="text-blue-400">#CloudComputing <span class="text-gray-500 text-xs">Steady</span></li>
-                                 <li class="text-purple-400">#DayInTheLife <span class="text-gray-500 text-xs">Viral</span></li>
-                             </ul>
-                        </div>
-                        <div class="glass-card p-6 rounded-2xl">
-                             <h3 class="text-lg font-bold mb-4">Engagement</h3>
-                             <div class="flex justify-between text-center">
-                                 <div><div class="text-xl font-bold">152</div><div class="text-xs text-gray-500">Likes</div></div>
-                                 <div><div class="text-xl font-bold">24</div><div class="text-xs text-gray-500">Comments</div></div>
-                                 <div><div class="text-xl font-bold">12</div><div class="text-xs text-gray-500">Shares</div></div>
-                             </div>
-                             <button class="w-full mt-4 text-xs bg-white/5 hover:bg-white/10 py-2 rounded">Respond to Comments</button>
-                        </div>
-                    </div>
-                    <div class="glass-card p-6 rounded-2xl lg:col-span-3">
-                        <h3 class="text-lg font-bold mb-4">Upcoming Schedule</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="p-4 bg-white/5 rounded-xl border-l-4 border-pink-500">
-                                <span class="text-xs text-pink-400 font-bold">INSTAGRAM</span>
-                                <div class="font-bold mt-1">"Day in the Life" Reel</div>
-                                <div class="text-xs text-gray-400 mt-2">Tomorrow, 9:00 AM</div>
-                            </div>
-                            <div class="p-4 bg-white/5 rounded-xl border-l-4 border-blue-500">
-                                <span class="text-xs text-blue-400 font-bold">LINKEDIN</span>
-                                <div class="font-bold mt-1">"AI in 2025" Article</div>
-                                <div class="text-xs text-gray-400 mt-2">Wed, 10:00 AM</div>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl bg-gradient-to-br from-indigo-900/20 to-purple-900/10">
+                <h3 class="text-white font-bold mb-4">Total Reach</h3>
+                <div class="flex justify-between items-end">
+                    <span class="text-4xl font-bold text-white" id="total-followers-display">0</span>
+                    <span class="text-green-400 text-sm font-bold mb-1">▲ 12%</span>
                 </div>
-             </div>
-
-            <div id="page-detail-microsoft" class="absolute inset-0 bg-[#0a0a0a] p-8 hidden-page overflow-y-auto page-transition z-20">
-                <button onclick="showPage('dashboard')" class="mb-6 text-indigo-400 hover:text-white flex items-center gap-2 transition"><i data-lucide="arrow-left" class="w-5 h-5"></i> Back</button>
-                <h1 class="text-3xl font-bold text-white mb-6">Microsoft Projects Console</h1>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="lg:col-span-2 grid grid-cols-2 md:grid-cols-3 gap-4">
-                        <button class="glass-card p-4 rounded-xl hover:bg-white/10 transition flex flex-col items-center justify-center text-center h-32 group">
-                            <span class="text-3xl mb-2 group-hover:scale-110 transition">📅</span><span class="font-bold">Meetings Today</span><span class="text-xs text-gray-400 mt-1">3 Scheduled</span>
-                        </button>
-                        <button class="glass-card p-4 rounded-xl hover:bg-white/10 transition flex flex-col items-center justify-center text-center h-32 group">
-                            <span class="text-3xl mb-2 group-hover:scale-110 transition">📧</span><span class="font-bold">Respond to Email</span><span class="text-xs text-red-400 mt-1">5 Unread</span>
-                        </button>
-                        <button class="glass-card p-4 rounded-xl hover:bg-white/10 transition flex flex-col items-center justify-center text-center h-32 group">
-                            <span class="text-3xl mb-2 group-hover:scale-110 transition">💬</span><span class="font-bold">Teams Message</span><span class="text-xs text-blue-400 mt-1">Active</span>
-                        </button>
-                        <button class="glass-card p-4 rounded-xl hover:bg-white/10 transition flex flex-col items-center justify-center text-center h-32 group">
-                            <span class="text-3xl mb-2 group-hover:scale-110 transition">⏱️</span><span class="font-bold">Log Hours</span><span class="text-xs text-green-400 mt-1">Start Timer</span>
-                        </button>
-                        <button class="glass-card p-4 rounded-xl hover:bg-white/10 transition flex flex-col items-center justify-center text-center h-32 group">
-                            <span class="text-3xl mb-2 group-hover:scale-110 transition">🚚</span><span class="font-bold">Create Dispatch</span>
-                        </button>
-                        <button class="glass-card p-4 rounded-xl hover:bg-white/10 transition flex flex-col items-center justify-center text-center h-32 group">
-                            <span class="text-3xl mb-2 group-hover:scale-110 transition">📋</span><span class="font-bold">To-Do List</span>
-                        </button>
+            </div>
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-green-500 bg-gradient-to-br from-green-900/10 to-transparent">
+    <div class="flex justify-between items-start mb-2">
+        <div>
+            <h3 class="text-white font-bold">Revenue</h3>
+            <p class="text-[10px] text-gray-400 uppercase tracking-wider">This Week</p>
+        </div>
+        <div class="p-2 bg-green-500/20 rounded-lg text-green-400 shadow-[0_0_10px_rgba(34,197,94,0.2)]">
+            💲
+        </div>
+    </div>
+                <div class="flex items-baseline gap-2 mt-2">
+                    <span class="text-3xl font-bold text-white">$124.50</span>
+                    <span class="text-xs text-green-400 font-bold">▲ $50 vs last week</span>
+                </div>
+                <div class="mt-4 space-y-2 pt-4 border-t border-white/5">
+                    <div class="flex justify-between text-xs text-gray-400">
+                        <span>Creator Funds</span>
+                        <span class="text-white font-mono">$42.00</span>
                     </div>
-
-                    <div class="glass-card p-6 rounded-2xl">
-                        <h3 class="text-lg font-bold mb-4">Active Dispatches & Milestones</h3>
-                        <table class="w-full text-left text-sm text-gray-400">
-                            <thead class="text-xs uppercase border-b border-white/10">
-                                <tr><th class="pb-2">Project</th><th class="pb-2">Milestone</th><th class="pb-2">Status</th><th class="pb-2">Action</th></tr>
-                            </thead>
-                            <tbody class="divide-y divide-white/5">
-                                <tr class="group hover:bg-white/5 transition">
-                                    <td class="py-3 font-bold text-white">Internal MS Flow</td>
-                                    <td>Phase 1 Config</td>
-                                    <td><span class="text-orange-300 bg-orange-500/20 px-2 py-0.5 rounded text-[10px]">IN PROGRESS</span></td>
-                                    <td>
-                                        <button class="bg-green-600 hover:bg-green-500 text-white p-1.5 rounded-lg transition shadow-lg shadow-green-900/20" title="Connect/Launch">
-                                            <i data-lucide="play" class="w-4 h-4"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="flex justify-between text-xs text-gray-400">
+                        <span>Affiliates</span>
+                        <span class="text-white font-mono">$82.50</span>
                     </div>
                 </div>
             </div>
+
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-orange-500">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold text-white">Algorithm Chaser</h3>
+                    <span class="text-[10px] bg-orange-500/20 text-orange-400 px-2 py-1 rounded animate-pulse">LIVE TRACKING</span>
+                </div>
+                <p class="text-xs text-gray-400 mb-4">Real-time engagement velocity. Prioritize posting where the heat is.</p>
+                
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1"><span class="text-gray-300">TikTok</span><span class="text-red-400 font-bold">HOT 🔥</span></div>
+                        <div class="algo-bar-container"><div class="algo-bar algo-hot" style="width: 92%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1"><span class="text-gray-300">Instagram</span><span class="text-blue-300 font-bold">Warm</span></div>
+                        <div class="algo-bar-container"><div class="algo-bar algo-warm" style="width: 65%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1"><span class="text-gray-300">X / Twitter</span><span class="text-gray-500 font-bold">Steady</span></div>
+                        <div class="algo-bar-container"><div class="algo-bar algo-cold" style="width: 40%"></div></div>
+                    </div>
+                     <div>
+                        <div class="flex justify-between text-xs mb-1"><span class="text-gray-300">Threads</span><span class="text-gray-500 font-bold">Low</span></div>
+                        <div class="algo-bar-container"><div class="algo-bar algo-cold" style="width: 25%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="lg:col-span-8 space-y-6">
+            
+            <div class="glass-card p-6 rounded-2xl border-t border-white/10">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold text-white">Studio Workbench</h3>
+                    <select id="post-platform-select" class="bg-black/30 text-xs border border-white/20 rounded-lg px-2 py-1 text-white">
+                        <option value="all">🚀 Cross-Post (All)</option>
+                        <option value="x">X / Twitter</option>
+                        <option value="insta">Instagram / Threads</option>
+                        <option value="tiktok">TikTok</option>
+                    </select>
+                </div>
+                <textarea id="content-input" class="w-full h-24 bg-black/30 border border-white/10 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-indigo-500 mb-4 font-mono transition-all" placeholder="Draft your next viral post..."></textarea>
+                
+                <div class="flex flex-wrap gap-3 items-center">
+                    <button id="btn-ai-rewrite" class="px-3 py-2 rounded-lg bg-purple-600/20 text-purple-300 hover:bg-purple-600/30 text-xs border border-purple-500/30 transition flex items-center gap-2">
+                        ✨ AI Magic Rewrite
+                    </button>
+                    <div class="flex-1"></div>
+                    <button class="lx-btn lx-success">Schedule</button>
+                    <button class="lx-btn lx-primary">Post Now</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-card p-3 rounded-xl border-t-2 border-white/30">
+                    <div class="text-[10px] uppercase text-gray-500 font-bold mb-1">X / Twitter</div>
+                    <div class="font-bold text-sm text-white">#DevCommunity</div>
+                    <div class="text-[10px] text-green-400 mt-1">▲ 15k posts</div>
+                </div>
+                <div class="glass-card p-3 rounded-xl border-t-2 border-pink-500">
+                    <div class="text-[10px] uppercase text-pink-400 font-bold mb-1">Instagram</div>
+                    <div class="font-bold text-sm text-white">POV: Coding</div>
+                    <div class="text-[10px] text-green-400 mt-1">🎵 Trending Audio</div>
+                </div>
+                <div class="glass-card p-3 rounded-xl border-t-2 border-gray-500">
+                    <div class="text-[10px] uppercase text-gray-400 font-bold mb-1">Threads</div>
+                    <div class="font-bold text-sm text-white">"My Desk Setup"</div>
+                    <div class="text-[10px] text-green-400 mt-1">▲ Viral</div>
+                </div>
+                <div class="glass-card p-3 rounded-xl border-t-2 border-teal-400">
+                    <div class="text-[10px] uppercase text-teal-400 font-bold mb-1">TikTok</div>
+                    <div class="font-bold text-sm text-white">Tech Life Hack</div>
+                    <div class="text-[10px] text-green-400 mt-1">⚡ High CTR</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <div class="glass-card p-6 rounded-2xl h-full border border-green-500/20">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold text-white">Ready for Review</h3>
+                        <span class="text-xs bg-green-500/20 text-green-400 px-2 py-1 rounded">2 Waiting</span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="p-3 bg-white/5 rounded-xl border border-white/10 flex flex-col gap-2">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                <span class="font-bold text-sm">Azure DevOps Tutorial</span>
+                            </div>
+                            <div class="flex gap-2 mt-1">
+                                <button class="flex-1 py-1.5 bg-white/5 hover:bg-white/10 text-xs rounded transition border border-white/10">👁️ Preview</button>
+                                <button class="flex-1 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs rounded transition">🚀 Stage</button>
+                            </div>
+                        </div>
+                         <div class="p-3 bg-white/5 rounded-xl border border-white/10 flex flex-col gap-2">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                                <span class="font-bold text-sm">Weekly Recap Reel</span>
+                            </div>
+                            <div class="flex gap-2 mt-1">
+                                <button class="flex-1 py-1.5 bg-white/5 hover:bg-white/10 text-xs rounded transition border border-white/10">👁️ Preview</button>
+                                <button class="flex-1 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs rounded transition">🚀 Stage</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl h-full">
+                    <h3 class="text-lg font-bold text-white mb-4">Queue</h3>
+                    
+                    <div class="space-y-3">
+                        <div class="p-3 bg-white/5 rounded-xl border-l-2 border-pink-500 flex justify-between items-center group">
+                            <div>
+                                <div class="text-[10px] text-pink-400 font-bold uppercase">Tom, 9:00 AM</div>
+                                <div class="font-bold text-sm">IG: "Day in Life"</div>
+                            </div>
+                            
+                            <div class="flex gap-1 opacity-100 transition-opacity">
+                                <button class="action-btn btn-pause" title="Pause">⏸</button>
+                                <button class="action-btn btn-cancel" title="Cancel">✕</button>
+                                <button class="action-btn btn-go" title="Post Now">➤</button>
+                            </div>
+                        </div>
+
+                         <div class="p-3 bg-white/5 rounded-xl border-l-2 border-blue-400 flex justify-between items-center group">
+                            <div>
+                                <div class="text-[10px] text-blue-400 font-bold uppercase">Wed, 10:00 AM</div>
+                                <div class="font-bold text-sm">X: AI Thread</div>
+                            </div>
+                            
+                            <div class="flex gap-1 opacity-100 transition-opacity">
+                                <button class="action-btn btn-pause" title="Pause">⏸</button>
+                                <button class="action-btn btn-cancel" title="Cancel">✕</button>
+                                <button class="action-btn btn-go" title="Post Now">➤</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+</div> <div class="mt-6 glass-card p-6 rounded-2xl">
+        <div class="flex justify-between items-center mb-4">
+            <div>
+                <h3 class="text-lg font-bold text-white">Community Pulse</h3>
+                <p class="text-xs text-gray-400">Agent Drafts Pending Approval</p>
+            </div>
+            <button onclick="Marketing.autoReplyAll()" class="text-xs bg-white/5 hover:bg-white/10 text-gray-300 px-3 py-1.5 rounded-lg transition border border-white/10">
+                ⚡ Approve All
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-h-80 overflow-y-auto custom-scrollbar pr-2">
+            
+            <div class="group relative md:col-span-2 bg-white/5 p-4 rounded-xl border border-white/5 flex flex-col md:flex-row gap-6 items-stretch">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-600 hidden md:block text-xl">➔</div>
+
+                <div class="flex-1 flex gap-4">
+                    <div class="w-10 h-10 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400 text-sm font-bold border border-pink-500/30 shrink-0">IG</div>
+                    <div>
+                        <div class="flex justify-between items-center mb-1 gap-4">
+                            <span class="font-bold text-sm text-gray-300">@sarah_codes</span>
+                            <span class="text-[10px] text-gray-500">2m ago</span>
+                        </div>
+                        <p class="text-sm text-gray-400 italic leading-relaxed">"This dashboard setup is insane! 🔥 Is the repo public?"</p>
+                    </div>
+                </div>
+
+                <div class="flex-1 bg-indigo-500/10 rounded-xl border border-indigo-500/30 flex flex-col relative transition-all duration-300 focus-within:bg-indigo-500/20 focus-within:border-indigo-400 p-3">
+                    
+                    <span class="absolute -top-3 right-4 text-[10px] bg-indigo-500 text-white px-2 py-0.5 rounded shadow-lg">AI Draft</span>
+                    
+                    <textarea readonly 
+                        class="w-full bg-transparent border-none text-sm text-indigo-100 focus:outline-none resize-none h-full min-h-[60px] p-1 font-medium placeholder-indigo-400/50 reply-input"
+                    >Thanks Sarah! The repo is coming soon, stay tuned! 🚀</textarea>
+
+                    <div class="flex justify-end gap-2 pt-2 mt-auto">
+                        <button onclick="Marketing.enableEdit(this)" 
+                            class="px-3 py-1.5 rounded text-xs bg-white/5 hover:bg-white/10 text-indigo-300 border border-white/10 flex items-center gap-1 transition">
+                            ✏️ Edit
+                        </button>
+                        <button onclick="Marketing.submitSingleReply(this)" 
+                            class="px-4 py-1.5 rounded text-xs bg-green-600 hover:bg-green-500 text-white font-bold shadow-lg shadow-green-900/20 flex items-center gap-1 transition">
+                            🚀 Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group relative md:col-span-2 bg-white/5 p-4 rounded-xl border border-white/5 flex flex-col md:flex-row gap-6 items-stretch">
+                 <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-600 hidden md:block text-xl">➔</div>
+
+                <div class="flex-1 flex gap-4">
+                    <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white text-sm font-bold border border-white/30 shrink-0">X</div>
+                    <div>
+                        <div class="flex justify-between items-center mb-1 gap-4">
+                            <span class="font-bold text-sm text-gray-300">@dev_guru</span>
+                            <span class="text-[10px] text-gray-500">15m ago</span>
+                        </div>
+                        <p class="text-sm text-gray-400 italic leading-relaxed">"Which API are you using for the stock tracker? Looks clean."</p>
+                    </div>
+                </div>
+
+                <div class="flex-1 bg-indigo-500/10 rounded-xl border border-indigo-500/30 flex flex-col relative transition-all duration-300 focus-within:bg-indigo-500/20 focus-within:border-indigo-400 p-3">
+                    
+                    <span class="absolute -top-3 right-4 text-[10px] bg-indigo-500 text-white px-2 py-0.5 rounded shadow-lg">AI Draft</span>
+                    
+                    <textarea readonly 
+                        class="w-full bg-transparent border-none text-sm text-indigo-100 focus:outline-none resize-none h-full min-h-[60px] p-1 font-medium placeholder-indigo-400/50 reply-input"
+                    >Using Python + AlphaVantage! I'll drop a tutorial soon. 🐍</textarea>
+
+                    <div class="flex justify-end gap-2 pt-2 mt-auto">
+                        <button onclick="Marketing.enableEdit(this)" 
+                            class="px-3 py-1.5 rounded text-xs bg-white/5 hover:bg-white/10 text-indigo-300 border border-white/10 flex items-center gap-1 transition">
+                            ✏️ Edit
+                        </button>
+                        <button onclick="Marketing.submitSingleReply(this)" 
+                            class="px-4 py-1.5 rounded text-xs bg-green-600 hover:bg-green-500 text-white font-bold shadow-lg shadow-green-900/20 flex items-center gap-1 transition">
+                            🚀 Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="page-detail-microsoft" class="absolute inset-0 bg-[#0a0a0a] p-8 hidden-page overflow-y-auto page-transition z-20">
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <button onclick="showPage('dashboard')" class="text-indigo-400 hover:text-white flex items-center gap-2 transition mb-2">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i> Back
+            </button>
+            <h1 class="text-3xl font-bold text-white">Microsoft Ops Center</h1>
+            <p class="text-gray-400 text-sm">Automated workflows & project command.</p>
+        </div>
+        <div class="flex gap-2">
+            <button class="lx-btn lx-glass" onclick="Microsoft.refreshAll()">🔄 Sync Graph API</button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+
+        <div class="space-y-6">
+            
+            <div class="glass-card p-5 rounded-2xl">
+                <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="calendar" class="w-4 h-4 text-blue-400"></i> Meetings Today
+                </h3>
+                <div class="space-y-3" id="ms-meetings-today">
+                    </div>
+            </div>
+
+            <div class="glass-card p-5 rounded-2xl">
+                <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2">
+                    <i data-lucide="coffee" class="w-4 h-4 text-yellow-400"></i> Prep for Tomorrow
+                </h3>
+                <div class="space-y-3" id="ms-meetings-prep">
+                    </div>
+            </div>
+
+        <div class="glass-card p-5 rounded-2xl h-full flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-sm font-bold text-white">To-Do</h3>
+                <div class="flex gap-2">
+                    <button onclick="Microsoft.deleteSelectedTasks()" class="text-[10px] bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white px-2 py-1 rounded transition border border-red-500/30">
+                        Delete Selected
+                    </button>
+                    <button onclick="Microsoft.addToDo()" class="text-xs bg-indigo-600 hover:bg-indigo-500 px-2 py-1 rounded text-white transition">
+                        + Add
+                    </button>
+                </div>
+            </div>
+            
+            <div class="space-y-2 overflow-y-auto max-h-[300px] custom-scrollbar flex-1" id="ms-todo-list">
+                </div>
+        </div>
+        </div>
+
+        <div class="space-y-6">
+
+            <div class="glass-card p-5 rounded-2xl border-t-2 border-blue-500">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span class="bg-blue-500/20 text-blue-400 p-1 rounded">📧</span> Outlook Messages
+                    </h3>
+                    <span class="text-[10px] text-gray-400">3 Unread</span>
+                </div>
+                <div class="space-y-3 max-h-[200px] overflow-y-auto custom-scrollbar" id="ms-outlook-list">
+                    </div>
+            </div>
+
+            <div class="glass-card p-5 rounded-2xl border-t-2 border-indigo-500">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <span class="bg-indigo-500/20 text-indigo-400 p-1 rounded">💬</span> Teams Messages
+                    </h3>
+                    <span class="text-[10px] text-gray-400">Live</span>
+                </div>
+                <div class="space-y-3 max-h-[200px] overflow-y-auto custom-scrollbar" id="ms-teams-list">
+                    </div>
+            </div>
+
+            <div class="glass-card p-5 rounded-2xl border border-indigo-500/30 shadow-[0_0_15px_rgba(99,102,241,0.1)]">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-sm font-bold text-white">Log Hours</h3>
+                    <button onclick="Microsoft.toggleEdit('log-hours-panel')" class="text-[10px] text-indigo-300 hover:text-white flex items-center gap-1">
+                        ✏️ Edit
+                    </button>
+                </div>
+                
+                <div id="log-hours-panel" class="space-y-3">
+                    <div>
+                        <label class="text-[10px] text-gray-500 uppercase">Select Dispatch</label>
+                        <select id="log-dispatch-select" class="ms-input" disabled>
+                            <option>-- Link to Active Dispatch --</option>
+                            <option>DIS-001: Northwind Env Update</option>
+                            <option>DIS-002: Contoso Migration</option>
+                        </select>
+                    </div>
+
+                    <div class="flex gap-3">
+                         <div class="flex-1">
+                            <label class="text-[10px] text-gray-500 uppercase">Account</label>
+                            <input type="text" id="log-account" class="ms-input" value="Northwind Traders" disabled>
+                         </div>
+                         <div class="w-1/3">
+                            <label class="text-[10px] text-gray-500 uppercase">Hours</label>
+                            <input type="number" id="log-time" class="ms-input" value="0.0" step="0.5" disabled>
+                         </div>
+                    </div>
+
+                    <div class="bg-black/20 p-2 rounded-lg border border-white/5">
+                        <label class="text-[10px] text-gray-500 uppercase mb-1 block">Tasks performed</label>
+                        <div class="space-y-1 max-h-24 overflow-y-auto custom-scrollbar">
+                            <label class="flex items-center gap-2 text-xs text-gray-300">
+                                <input type="checkbox" class="accent-indigo-500" disabled checked> Configured Dataverse
+                            </label>
+                            <label class="flex items-center gap-2 text-xs text-gray-300">
+                                <input type="checkbox" class="accent-indigo-500" disabled checked> Debugged Flow Logic
+                            </label>
+                             <label class="flex items-center gap-2 text-xs text-gray-300">
+                                <input type="checkbox" class="accent-indigo-500" disabled> User Training
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-[10px] text-gray-500 uppercase">Automated Notes</label>
+                        <textarea id="log-notes" class="ms-input h-16 resize-none" disabled>Executed dispatch DIS-001. Configured Dataverse tables and resolved sync errors in the flow.</textarea>
+                    </div>
+
+                    <button onclick="Microsoft.submitLog()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold py-2 rounded-lg transition shadow-lg shadow-indigo-900/20">
+                        🚀 Submit Log
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="space-y-6">
+
+            <div class="glass-card p-5 rounded-2xl border border-orange-500/30 shadow-[0_0_15px_rgba(249,115,22,0.1)]">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-sm font-bold text-white">Create Dispatch</h3>
+                    <button onclick="Microsoft.toggleEdit('dispatch-panel')" class="text-[10px] text-orange-300 hover:text-white flex items-center gap-1">
+                        ✏️ Edit
+                    </button>
+                </div>
+
+                <div id="dispatch-panel" class="space-y-3">
+                    <div>
+                        <label class="text-[10px] text-gray-500 uppercase">Dispatch Title</label>
+                        <input type="text" class="ms-input font-bold" value="Q3 Environment Patch" disabled>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <div class="flex-1">
+                            <label class="text-[10px] text-gray-500 uppercase">Product</label>
+                            <select class="ms-input" disabled>
+                                <option>Dynamics 365 Sales</option>
+                                <option>Power Automate</option>
+                                <option>Power BI</option>
+                            </select>
+                        </div>
+                        <div class="flex-1">
+                            <label class="text-[10px] text-gray-500 uppercase">Service</label>
+                            <select class="ms-input" disabled>
+                                <option>Implementation</option>
+                                <option>Support / Fix</option>
+                                <option>Consulting</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <div class="flex-1">
+                             <label class="text-[10px] text-gray-500 uppercase">Launch Date</label>
+                             <input type="date" class="ms-input" disabled>
+                        </div>
+                        <div class="w-1/3">
+                             <label class="text-[10px] text-gray-500 uppercase">Est. Hours</label>
+                             <input type="number" class="ms-input" value="5" disabled>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-[10px] text-gray-500 uppercase">Pre-Generated Notes</label>
+                        <textarea class="ms-input h-20 resize-none" disabled>Standard deployment protocol. Check solution layers before export. Notify admin upon completion.</textarea>
+                    </div>
+
+                    <button class="w-full bg-orange-600 hover:bg-orange-500 text-white text-xs font-bold py-2 rounded-lg transition shadow-lg shadow-orange-900/20">
+                        📦 Create Dispatch
+                    </button>
+                </div>
+            </div>
+
+            <div class="glass-card p-5 rounded-2xl h-full border border-teal-500/30 shadow-[0_0_15px_rgba(45,212,191,0.1)]">
+                <h3 class="text-sm font-bold text-white mb-4">Active Milestones</h3>
+                
+                <div class="flex gap-2 mb-3">
+                    <select class="ms-input w-2/3"><option>Filter Account...</option></select>
+                    <button class="bg-teal-600 hover:bg-teal-500 text-white px-3 rounded text-xs flex-1 transition">+ New</button>
+                </div>
+
+                <div class="space-y-3 overflow-y-auto max-h-[300px] custom-scrollbar" id="ms-milestones-list">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="glass-card p-6 rounded-2xl mb-6 relative overflow-hidden">
+        <h3 class="text-lg font-bold text-white mb-6">Trended PACV</h3>
+         <div class="flex gap-8 mb-8 border-b border-white/5 pb-6">
+            <div>
+                <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">PACV YTD</div>
+                <div class="text-2xl font-bold text-white mt-1">$9,685,665</div>
+                <div class="text-[10px] text-red-400 font-mono mt-1">Target: $76M (-87%)</div>
+            </div>
+            <div class="pl-8 border-l border-white/10">
+                <div class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">PACV MTD</div>
+                <div class="text-2xl font-bold text-white mt-1">$2,419,551</div>
+                <div class="text-[10px] text-red-400 font-mono mt-1">Target: $20M (-88%)</div>
+            </div>
+        </div>
+    
+        <div class="relative h-64 w-full px-4">
+            <div class="absolute inset-0 flex flex-col justify-between text-[10px] text-gray-600 pointer-events-none">
+                <div class="border-b border-white/5 w-full"></div>
+                <div class="border-b border-white/5 w-full"></div>
+                <div class="border-b border-white/5 w-full"></div>
+                <div class="border-b border-white/5 w-full"></div>
+            </div>
+    
+            <div class="absolute inset-0 flex justify-between items-end px-12 pb-6">
+                <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                    <div class="w-16 bg-green-900/40 border-t-2 border-green-500 h-24 hover:h-28 transition-all duration-300 relative group-hover:bg-green-800/50"></div>
+                    <span class="text-[10px] text-gray-500 font-mono">$2.1M</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                    <div class="w-16 bg-green-900/40 border-t-2 border-green-500 h-32 hover:h-36 transition-all duration-300 group-hover:bg-green-800/50"></div>
+                    <span class="text-[10px] text-gray-500 font-mono">$4.2M</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                    <div class="w-16 bg-green-900/40 border-t-2 border-green-500 h-40 hover:h-44 transition-all duration-300 group-hover:bg-green-800/50"></div>
+                    <span class="text-[10px] text-gray-500 font-mono">$5.8M</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 group cursor-pointer">
+                    <div class="w-16 bg-indigo-900/40 border-t-2 border-indigo-500 h-48 hover:h-52 transition-all duration-300 group-hover:bg-indigo-800/50 relative">
+                        <span class="absolute -top-6 left-1/2 -translate-x-1/2 text-[9px] bg-indigo-500 text-white px-1 rounded opacity-0 group-hover:opacity-100 transition">Goal</span>
+                    </div>
+                    <span class="text-[10px] text-indigo-300 font-mono">$21M</span>
+                </div>
+            </div>
+    
+            <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 10;">
+                <path d="M80,180 L350,150 L620,120 L890,90" 
+                      fill="none" 
+                      stroke="white" 
+                      stroke-width="2" 
+                      stroke-dasharray="5,5"
+                      class="opacity-60" />
+                <circle cx="890" cy="90" r="4" fill="#6366f1" stroke="white" stroke-width="2" />
+            </svg>
+        </div>
+    </div>
+</div>
+
+<div id="page-detail-health" class="absolute inset-0 bg-[#0a0a0a] p-8 hidden-page overflow-y-auto page-transition z-20">
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <button onclick="showPage('dashboard')" class="text-cyan-400 hover:text-white flex items-center gap-2 transition mb-2">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i> Back
+            </button>
+            <h1 class="text-3xl font-bold text-white flex items-center gap-3">
+                Bio-Optimization OS
+                <span class="text-xs bg-cyan-900 text-cyan-300 px-2 py-1 rounded border border-cyan-500/30">v2.1</span>
+            </h1>
+            <p class="text-gray-400 text-sm">Vitals, Nutrition, and Preventative Care.</p>
+        </div>
+        <div class="flex gap-2">
+            <button class="lx-btn lx-glass" onclick="Health.logWater()">💧 Log Water</button>
+            <button class="lx-btn lx-primary" style="background-color: #0891b2;" onclick="Health.editProfile()">👤 Update Bio-Profile</button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <div class="glass-medical p-4 rounded-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+            <div class="text-[10px] text-cyan-300 uppercase tracking-widest mb-1">Body Battery</div>
+            <div class="flex items-end gap-2">
+                <span class="text-3xl font-bold text-white">87%</span>
+                <span class="text-xs text-green-400 mb-1">Optimized</span>
+            </div>
+            <div class="w-full bg-white/10 h-1 mt-2 rounded-full overflow-hidden">
+                <div class="bg-green-500 h-full" style="width: 87%"></div>
+            </div>
+        </div>
+
+        <div class="glass-medical p-4 rounded-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1 h-full bg-cyan-500"></div>
+            <div class="text-[10px] text-cyan-300 uppercase tracking-widest mb-1">Current Weight</div>
+            <div class="flex items-end gap-2">
+                <span class="text-3xl font-bold text-white" id="bio-weight">--</span>
+                <span class="text-xs text-gray-400 mb-1">lbs</span>
+            </div>
+            <div class="text-[10px] text-cyan-400 mt-1">Target: <span id="bio-target-weight">--</span> lbs</div>
+        </div>
+
+        <div class="glass-medical p-4 rounded-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+            <div class="text-[10px] text-cyan-300 uppercase tracking-widest mb-1">Hydration Level</div>
+            <div class="flex items-end gap-2">
+                <span class="text-3xl font-bold text-white" id="bio-water">0</span>
+                <span class="text-xs text-gray-400 mb-1">/ 90 oz</span>
+            </div>
+            <div class="w-full bg-white/10 h-1 mt-2 rounded-full overflow-hidden">
+                <div class="bg-blue-500 h-full transition-all duration-500" id="bio-water-bar" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="glass-medical p-4 rounded-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1 h-full bg-purple-500"></div>
+            <div class="text-[10px] text-cyan-300 uppercase tracking-widest mb-1">Sleep Score</div>
+            <div class="flex items-end gap-2">
+                <span class="text-3xl font-bold text-white">7h 12m</span>
+            </div>
+            <div class="text-[10px] text-purple-300 mt-1">Deep Sleep: 1h 45m</div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <div class="lg:col-span-2 space-y-6">
+            
+            <div class="glass-card p-6 rounded-2xl border-t border-green-500/30">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i data-lucide="utensils" class="w-4 h-4 text-green-400"></i> Macro Engine
+                    </h3>
+                    <div class="text-xs text-gray-400">1,240 / 1,800 kcal consumed</div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-gray-300">Protein</span>
+                            <span class="text-green-400 font-bold">95g / 140g</span>
+                        </div>
+                        <div class="macro-bar-bg"><div class="macro-fill bg-green-500" style="width: 68%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-gray-300">Carbs</span>
+                            <span class="text-blue-400 font-bold">120g / 200g</span>
+                        </div>
+                        <div class="macro-bar-bg"><div class="macro-fill bg-blue-500" style="width: 60%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-gray-300">Fats</span>
+                            <span class="text-yellow-400 font-bold">45g / 65g</span>
+                        </div>
+                        <div class="macro-bar-bg"><div class="macro-fill bg-yellow-500" style="width: 70%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-6 rounded-2xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i data-lucide="pill" class="w-4 h-4 text-cyan-400"></i> The Stack
+                    </h3>
+                    <span class="text-[10px] bg-white/10 px-2 py-1 rounded text-gray-300">AM / PM Protocol</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="bio-supplements-list">
+                    </div>
+            </div>
+
+        </div>
+
+        <div class="space-y-6">
+            
+            <div class="glass-card p-6 rounded-2xl border-t border-red-500/30 h-full">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Medical Nexus</h3>
+                        <p class="text-xs text-gray-400">Preventative Maintenance Schedule</p>
+                    </div>
+                    <i data-lucide="stethoscope" class="w-5 h-5 text-red-400"></i>
+                </div>
+
+                <div class="p-3 bg-white/5 rounded-xl border border-white/5 mb-4 text-xs flex justify-between">
+                    <div class="text-gray-400">Based on Profile:</div>
+                    <div class="text-cyan-300 font-bold" id="bio-profile-summary">--</div>
+                </div>
+
+                <div class="space-y-3 relative" id="bio-appointments-list">
+                   </div>
+
+                <div class="mt-6 p-4 bg-cyan-900/20 border border-cyan-500/30 rounded-xl">
+                    <div class="text-[10px] font-bold text-cyan-400 uppercase mb-2">AI Doctor Note</div>
+                    <p class="text-xs text-gray-300 italic leading-relaxed">
+                        "Given your activity level and age, consider adding a Magnesium Glycinate supplement for sleep recovery. Your next blood panel is due in 2 months."
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
              <div id="page-detail-future" class="absolute inset-0 bg-[#0a0a0a] p-8 hidden-page overflow-y-auto page-transition z-20">
                 <button onclick="showPage('dashboard')" class="mb-6 text-indigo-400 hover:text-white flex items-center gap-2 transition"><i data-lucide="arrow-left" class="w-5 h-5"></i> Back</button>
