@@ -50,19 +50,18 @@ function renderHoldingsTable(rows) {
     tableBody.innerHTML = "";
 
     rows.forEach((item, index) => {
-        const tr = document.createElement("tr");
-        tr.className = "hover:bg-white/5 cursor-pointer";
-        tr.dataset.index = index;
-
-        tr.innerHTML = `
-            <td class="px-4 py-3 font-bold text-white">${item.ticker}</td>
-            <td class="px-4 py-3">${item.quantity}</td>
-            <td class="px-4 py-3">$${Number(item.currentPrice || 0).toLocaleString()}</td>
-            <td class="px-4 py-3 font-mono">$${Number(item.marketValue || 0).toLocaleString()}</td>
-            <td class="px-4 py-3 text-blue-400 cursor-pointer">Trade</td>
+        tableBody.innerHTML += `
+            <tr class="hover:bg-white/5 cursor-pointer" data-index="${index}">
+                <td class="px-4 py-3">${item.ticker || "-"}</td>
+                <td class="px-4 py-3">${item.assetType || "-"}</td>
+                <td class="px-4 py-3">${item.quantity || 0}</td>
+                <td class="px-4 py-3">$${(item.currentPrice || 0).toLocaleString()}</td>
+                <td class="px-4 py-3">$${(item.totalInvestment || 0).toLocaleString()}</td>
+                <td class="px-4 py-3">$${(item.marketValue || 0).toLocaleString()}</td>
+                <td class="px-4 py-3">$${(item.gain || 0).toLocaleString()}</td>
+                <td class="px-4 py-3">${item.gainPct != null ? (item.gainPct * 100).toFixed(2) + "%" : "-"}</td>
+            </tr>
         `;
-
-        tableBody.appendChild(tr);
     });
 }
 

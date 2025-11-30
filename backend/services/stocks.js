@@ -32,17 +32,22 @@ export async function getPortfolio() {
   try {
     const res = await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
-      range: `${TAB}!A3:E`
+      range: `${TAB}!A3:H`
     });
 
     const rows = res.data.values || [];
 
-    return rows.map((row) => ({
-      ticker: row[0],
-      quantity: Number(row[1]),
-      currentPrice: Number(row[2]),
-      marketValue: Number(row[3])
-    }));
+  return rows.map((row) => ({
+    ticker: row[0],
+    assetType: row[1],
+    quantity: Number(row[2]),
+    currentPrice: Number(row[3]),
+    totalInvestment: Number(row[4]),
+    marketValue: Number(row[5]),
+    gain: Number(row[6]),
+    gainPct: Number(row[7])
+  }));
+
   } catch (err) {
     console.error("❌ Error loading portfolio:", err);
     throw err;
